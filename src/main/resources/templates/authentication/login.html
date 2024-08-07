@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Login</title>
+</head>
+
+<body>
+
+<!--navbar-->
+<section th:insert="~{base :: navbar}"></section>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <h1 class="text-center mb-4">Login</h1>
+
+            <div th:if="${param.error}"
+                 class="alert alert-danger text-center"
+                 role="alert">
+                <strong>Invalid email or password.</strong>
+            </div>
+
+            <form th:action="@{/login}" method="post" class="shadow p-4 rounded">
+                <div class="mb-3">
+                    <label for="username" class="form-label">E-mail</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+
+                <div class="d-grid">
+                    <strong class="text-center" style="padding: 10px">Don't have account? <a class="ms-2" href="/register">Register here</a>
+                    </strong>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    // Automatically hide error messages after 5 seconds
+    document.addEventListener('DOMContentLoaded', function () {
+        const errorMessages = document.querySelectorAll('div.alert-danger');
+        if (errorMessages) {
+            setTimeout(() => {
+                errorMessages.forEach(error => error.style.display = 'none');
+            }, 3000); // 5000 milliseconds = 5 seconds
+        }
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXlUFAW8xGowp6SuQO2Upj/5aAe/d8O4pD+eF2OkSG3aWoi4shXDnAj/6j2M"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhG+n7y1QK+lSoq5g4D8bs4y/3j6WV7l5rZDJT2m5zI2LKspZTJfIP7ItdR1"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

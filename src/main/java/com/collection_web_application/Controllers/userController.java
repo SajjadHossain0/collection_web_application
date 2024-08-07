@@ -11,6 +11,6 @@ public class userController {
     @GetMapping("")
     public String user(){
 
-        return "user_page";
+        return "user/user_page";
     }
 }
