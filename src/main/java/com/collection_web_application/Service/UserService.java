@@ -21,6 +21,11 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
 
+        // Check if the user is active
+        if (!user.isActive()) {
+            throw new UsernameNotFoundException("User is blocked");
+        }
+
         UserDetails thisUserDetails = org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
                 .password(user.getPassword())

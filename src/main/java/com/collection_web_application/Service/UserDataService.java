@@ -15,7 +15,4 @@ public interface UserDataService {
 
     void deleteUser(Long userId);
 
-    List<User> searchUserByEmailOrRole(String query);
-
-
 }

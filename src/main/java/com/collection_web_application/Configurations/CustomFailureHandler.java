@@ -14,7 +14,7 @@ public class CustomFailureHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        if (exception.getMessage().equalsIgnoreCase("User account is blocked")) {
+        if (exception.getMessage().equals("User is blocked")) {
             response.sendRedirect("/login?error=blocked");
         } else {
             response.sendRedirect("/login?error=true");

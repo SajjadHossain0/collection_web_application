@@ -13,7 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public User findByEmail(String email);
 
-    @Query("SELECT x FROM User x WHERE x.email = :email OR x.role LIKE %:role%")
-    List<User> findByEmailOrRole(@Param("email") String email, @Param("role") String role);
+    @Query("SELECT u FROM User u WHERE u.email = :query OR u.role LIKE %:query%")
+    List<User> findByEmailOrRoleContaining(@Param("query") String query);
 
 }

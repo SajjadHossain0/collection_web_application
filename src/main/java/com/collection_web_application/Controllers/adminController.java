@@ -32,15 +32,6 @@ public class adminController {
         return "admin/admin_page";
     }
 
-    // search
-
-    @GetMapping("/userDetails/search")
-    public String searchUserByEmailOrRole(@RequestParam("query") String query, Model model) {
-        List<User> searchResults = userDataService.searchUserByEmailOrRole(query);
-        model.addAttribute("userDetails", searchResults);
-        return "admin/admin_page";
-    }
-
 
     // user action buttons
 
