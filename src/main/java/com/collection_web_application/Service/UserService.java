@@ -3,7 +3,6 @@ package com.collection_web_application.Service;
 import com.collection_web_application.Entities.User;
 import com.collection_web_application.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

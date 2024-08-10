@@ -3,7 +3,6 @@ package com.collection_web_application.Entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import org.springframework.boot.autoconfigure.web.WebProperties;
 
 @Entity
 @Table(name = "user_table", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
@@ -25,17 +24,21 @@ public class User {
     private String role;
 
     private boolean active = true;
+    private String lastLoginTime;
+    private String registrationTime;
 
     public User() {
     }
 
-    public User(Long id, String name, String email, String password, String role, boolean active) {
+    public User(Long id, String name, String email, String password, String role, boolean active, String lastLoginTime, String registrationTime) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
         this.active = active;
+        this.lastLoginTime = lastLoginTime;
+        this.registrationTime = registrationTime;
     }
 
     public Long getId() {
@@ -84,5 +87,21 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(String lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getRegistrationTime() {
+        return registrationTime;
+    }
+
+    public void setRegistrationTime(String registrationTime) {
+        this.registrationTime = registrationTime;
     }
 }

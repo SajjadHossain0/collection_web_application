@@ -7,6 +7,7 @@ import com.collection_web_application.Service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +57,24 @@ public class UserDataServiceImpl implements UserDataService {
     @Override
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public List<User> searchUserByEmailOrRole(String query) {
+        try {
+            // Extract email and role from the query string
+            // For simplicity, let's assume the query string is formatted as "email:role"
+            String[] parts = query.split(":");
+            String email = parts.length > 0 ? parts[0] : "";
+            String role = parts.length > 1 ? parts[1] : "";
+
+            // Use the findByEmailOrRole method to search for users
+            return userRepository.findByEmailOrRole(email, role);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle any exceptions that may occur
+            return Collections.emptyList();
+        }
     }
 
 
