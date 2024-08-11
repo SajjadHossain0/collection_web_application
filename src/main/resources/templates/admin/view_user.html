@@ -51,7 +51,7 @@
                         </button>
                     </li>
                     <li>
-                        <button id="deleteBtn" class="btn" onclick="handleAction('/admin/delete', 'DELETE')"
+                        <button id="deleteBtn" class="btn" onclick="handleAction('/admin/delete', 'POST')"
                                 style="margin: 2px; background-color: #f0ad4e; color: white; border: none;">
                             Delete
                         </button>
@@ -80,7 +80,7 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th><input type="checkbox" id="selectAllSearch"></th>
+                    <th><input type="checkbox" id="selectAllSearchedUser"></th>
                     <th>Id</th>
                     <th>Name</th>
                     <th>E-mail</th>
@@ -128,7 +128,7 @@
         </table>
     </div>
 
-    <!-- Script for action buttons -->
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Hide search results on page load
@@ -142,13 +142,12 @@
             }
         };
 
-        document.getElementById('selectAllSearch').onclick = function () {
+        document.getElementById('selectAllSearchedUser').onclick = function () {
             var checkboxes = document.querySelectorAll('#search-results .selectRow');
             for (var checkbox of checkboxes) {
                 checkbox.checked = this.checked;
             }
         };
-
         function getSelectedUserIds() {
             var checkboxes = document.querySelectorAll('.selectRow:checked');
             var userIds = [];
@@ -158,7 +157,6 @@
             }
             return userIds;
         }
-
         function handleAction(url, method) {
             var userIds = getSelectedUserIds();
             if (userIds.length > 0) {
@@ -167,7 +165,6 @@
                 alert('No users selected');
             }
         }
-
         function sendRequest(url, userIds, method) {
             const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
             const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
@@ -176,7 +173,6 @@
                 console.error('CSRF token or header name not found');
                 return;
             }
-
             fetch(url, {
                 method: method,
                 headers: {
@@ -196,53 +192,6 @@
                 })
                 .catch(error => console.error('Error:', error));
         }
-
-/*
-        function searchUser() {
-            let query = document.getElementById("search-input").value;
-            let userTable = document.getElementById("user-table");
-            let searchResults = document.getElementById("search-results");
-            let tableBody = document.getElementById("search-results-body");
-
-            if (query === '') {
-                userTable.style.display = 'table';
-                searchResults.style.display = 'none';
-            } else {
-                userTable.style.display = 'none';
-                searchResults.style.display = 'block';
-                fetch(`/admin/userDetails/search/${query}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        tableBody.innerHTML = '';
-
-                        if (data.length > 0) {
-                            data.forEach((user, index) => {
-                                tableBody.innerHTML += `
-                                    <tr>
-                                        <td><input type="checkbox" class="selectRow"></td>
-                                        <td>${index + 1}</td>
-                                        <td>${user.name}</td>
-                                        <td>${user.email}</td>
-                                        <td>${user.lastLoginTime}</td>
-                                        <td>${user.registrationTime}</td>
-                                        <td style="color: ${user.active ? 'green' : 'red'};">
-                                            ${user.active ? 'Active' : 'Blocked'}
-                                        </td>
-                                        <td style="color: ${user.role == 'ADMIN' ? 'green' : ''};">
-                                            ${user.role}
-                                        </td>
-                                    </tr>
-                                `;
-                            });
-                        } else {
-                            tableBody.innerHTML = '<tr><td colspan="8">No users found</td></tr>';
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
-        }
-*/
-
         function searchUser() {
             let query = document.getElementById("search-input").value;
             let userTable = document.getElementById("user-table");
