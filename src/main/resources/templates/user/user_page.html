@@ -35,12 +35,20 @@
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" required>
+                        <input type="text" class="form-control" id="title" name="title"
+                               maxlength="20"
+                               oninput="updateCharacterCountTitle()" required >
+                        <small id="charCountTitle" class="form-text text-muted">20 characters remaining.</small>
+
                     </div>
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter a detailed description..." required></textarea>
+                        <textarea class="form-control" id="description" name="description" rows="4"
+                                  placeholder="Enter a detailed description..."
+                                  maxlength="150" required
+                                  oninput="updateCharacterCountDescription()"></textarea>
+                        <small id="charCountDescription" class="form-text text-muted">150 characters remaining.</small>
                     </div>
 
                     <button type="submit" class="btn btn-dark w-100">Add Collection</button>
@@ -107,61 +115,24 @@
     </div>
 </div>
 
-<!--
-<div class="container">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+<script>
+    function updateCharacterCountTitle(){
+        const textarea = document.getElementById('title');
+        const charCount = document.getElementById('charCountTitle');
+        const maxLength = textarea.getAttribute('maxlength');
+        const currentLength = textarea.value.length;
 
-        <div class="col" style="padding: 10px">
+        charCount.textContent = `${maxLength - currentLength} characters remaining.`;
+    }
+    function updateCharacterCountDescription() {
+        const textarea = document.getElementById('description');
+        const charCount = document.getElementById('charCountDescription');
+        const maxLength = textarea.getAttribute('maxlength');
+        const currentLength = textarea.value.length;
 
-            <div id="main-card" class="card" style="width: 100%;">
-                &lt;!&ndash;Top Edit & delete buttons&ndash;&gt;
-                <div class="d-flex justify-content-end p-2" style="margin: 5px">
-                    <button id="edit-btn" style="margin: 2px" class="btn btn-outline-secondary">Edit</button>
-                    <button style="margin: 2px" class="btn btn-outline-danger">Delete</button>
-                </div>
-                &lt;!&ndash;=========================&ndash;&gt;
-
-                &lt;!&ndash;middle side by side info & image option&ndash;&gt;
-                <div class="d-flex">
-                    <div id="text-div" class="w-50 p-2">
-                        <div>
-                            <h5>Title</h5>
-                            <p>Title name here</p>
-                        </div>
-                        <div>
-                            <h5>Description</h5>
-                            <p>Some description about collection and items.</p>
-                        </div>
-                    </div>
-
-                    <div class="w-50 p-2" style="text-align: center">
-                        &lt;!&ndash;                        <img src="..." class="img-fluid" alt="..." style="width: 100px; height: 100px;">&ndash;&gt;
-                        <i class="fa-solid fa-sun"></i>
-                    </div>
-                </div>
-                &lt;!&ndash;============================&ndash;&gt;
-
-                &lt;!&ndash; Down date & See Collection button &ndash;&gt;
-                <div class="d-flex justify-content-between p-2">
-                    <div>
-                        <p class="mb-0">Date : __/__/____</p>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-outline-info">See Collection</button>
-                    </div>
-                </div>
-                &lt;!&ndash; ============================ &ndash;&gt;
-
-            </div>
-
-        </div>
-
-
-    </div>
-</div>
--->
-
-
+        charCount.textContent = `${maxLength - currentLength} characters remaining.`;
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>

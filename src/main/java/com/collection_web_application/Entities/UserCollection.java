@@ -2,6 +2,8 @@ package com.collection_web_application.Entities;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.sql.Blob;
 
@@ -18,7 +20,14 @@ public class UserCollection {
     @Column(name = "cover_photo")
     private Blob coverPhoto;
 
+    @NotNull
+    @Size(max = 20)
+    @Column(length = 20)
     private String title;
+
+    @NotNull
+    @Size(max = 150)
+    @Column(length = 150)
     private String description;
     private String collection_creation_date;
 
