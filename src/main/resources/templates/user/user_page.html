@@ -18,8 +18,8 @@
 
 <!-- Modal for add new collections -->
 <div class="modal fade" id="addCollectionModal" tabindex="-1" aria-labelledby="addCollectionModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div id="modal-dialog" class="modal-dialog">
+        <div id="modal-content" class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addCollectionModalLabel">Add new collection</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -51,20 +51,78 @@
 </div>
 
 
+<!--
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+        &lt;!&ndash; Iterate over the collections &ndash;&gt;
+        <div class="col" style="padding: 10px" th:each="collection : ${collections}">
+
+            <div id="main-card" class="card" style="width: 100%;">
+                &lt;!&ndash;Top Edit & delete buttons&ndash;&gt;
+                <div class="d-flex justify-content-end p-2" style="margin: 5px">
+                    <button id="edit-btn" style="margin: 2px" class="btn btn-outline-secondary">Edit</button>
+                    <button style="margin: 2px" class="btn btn-outline-danger">Delete</button>
+                </div>
+                &lt;!&ndash;=========================&ndash;&gt;
+
+                &lt;!&ndash;middle side by side info & image option&ndash;&gt;
+                <div class="d-flex">
+                    <div id="text-div" class="w-50 p-2">
+                        <div>
+                            <h5>Title</h5>
+                            <p th:text="${collection.title}">Title name here</p>
+                        </div>
+                        <div>
+                            <h5>Description</h5>
+                            <p th:text="${collection.description}">Some description about collection and items.</p>
+                        </div>
+                    </div>
+
+                    <div class="w-50 p-2" style="text-align: center">
+                        &lt;!&ndash; Display the cover photo if it exists &ndash;&gt;
+                        <img th:src="@{'data:image/jpeg;base64,' + ${#strings.bytesToBase64(collection.coverPhoto.bytes)}}"
+                             class="img-fluid"
+                             alt="Cover Photo"
+                             style="width: 100px; height: 100px;" />
+                    </div>
+                </div>
+                &lt;!&ndash;============================&ndash;&gt;
+
+                &lt;!&ndash; Down date & See Collection button &ndash;&gt;
+                <div class="d-flex justify-content-between p-2">
+                    <div>
+                        <p class="mb-0" th:text="'Date: ' + ${collection.collection_creation_date}">Date : __/__/____</p>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-outline-info">See Collection</button>
+                    </div>
+                </div>
+                &lt;!&ndash; ============================ &ndash;&gt;
+
+            </div>
+
+        </div>
+        &lt;!&ndash; End of iteration &ndash;&gt;
+    </div>
+</div>
+-->
+
+<!--
 <div class="container">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
         <div class="col" style="padding: 10px">
 
             <div id="main-card" class="card" style="width: 100%;">
-                <!--Top Edit & delete buttons-->
+                &lt;!&ndash;Top Edit & delete buttons&ndash;&gt;
                 <div class="d-flex justify-content-end p-2" style="margin: 5px">
                     <button id="edit-btn" style="margin: 2px" class="btn btn-outline-secondary">Edit</button>
                     <button style="margin: 2px" class="btn btn-outline-danger">Delete</button>
                 </div>
-                <!--=========================-->
+                &lt;!&ndash;=========================&ndash;&gt;
 
-                <!--middle side by side info & image option-->
+                &lt;!&ndash;middle side by side info & image option&ndash;&gt;
                 <div class="d-flex">
                     <div id="text-div" class="w-50 p-2">
                         <div>
@@ -78,13 +136,13 @@
                     </div>
 
                     <div class="w-50 p-2" style="text-align: center">
-                        <!--                        <img src="..." class="img-fluid" alt="..." style="width: 100px; height: 100px;">-->
+                        &lt;!&ndash;                        <img src="..." class="img-fluid" alt="..." style="width: 100px; height: 100px;">&ndash;&gt;
                         <i class="fa-solid fa-sun"></i>
                     </div>
                 </div>
-                <!--============================-->
+                &lt;!&ndash;============================&ndash;&gt;
 
-                <!-- Down date & See Collection button -->
+                &lt;!&ndash; Down date & See Collection button &ndash;&gt;
                 <div class="d-flex justify-content-between p-2">
                     <div>
                         <p class="mb-0">Date : __/__/____</p>
@@ -93,7 +151,7 @@
                         <button type="button" class="btn btn-outline-info">See Collection</button>
                     </div>
                 </div>
-                <!-- ============================ -->
+                &lt;!&ndash; ============================ &ndash;&gt;
 
             </div>
 
@@ -102,6 +160,7 @@
 
     </div>
 </div>
+-->
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

@@ -21,6 +21,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -76,5 +77,6 @@ public class userController {
 
         return "redirect:/user"; // Redirect to a list of collections or another page
     }
+
 
 }
