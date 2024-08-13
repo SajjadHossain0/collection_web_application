@@ -4,13 +4,15 @@ import com.collection_web_application.Entities.User;
 import com.collection_web_application.Entities.UserCollection;
 import com.collection_web_application.Repository.UserCollectionRepository;
 import com.collection_web_application.Repository.UserRepository;
+import com.collection_web_application.Service.UserCollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -22,6 +24,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -32,12 +35,41 @@ public class userController {
     private UserCollectionRepository userCollectionRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserCollectionService userCollectionService;
+
 
     @GetMapping("")
-    public String user() {
+    public String user(Model model, Principal principal) {
+
+        // Get the currently logged-in user
+        User user = userRepository.findByEmail(principal.getName());
+        // send order to html page to show data
+        model.addAttribute("userCollection", userCollectionService.getCollectionsByUser(user));
 
         return "user/user_page";
     }
+
+    @GetMapping("/image/{id}")
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") Long id) throws SQLException {
+        Optional<UserCollection> collection = userCollectionRepository.findById(id);
+
+        if (collection.isPresent() && collection.get().getCoverPhoto() != null) {
+            Blob coverPhotoBlob = collection.get().getCoverPhoto();
+            byte[] imageBytes = coverPhotoBlob.getBytes(1, (int) coverPhotoBlob.length());
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);  // You can adjust this if your image is PNG
+            headers.setContentLength(imageBytes.length);
+
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
 
     @PostMapping("/add_collection")
     public String addCollection(

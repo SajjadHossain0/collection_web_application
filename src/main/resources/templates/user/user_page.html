@@ -51,62 +51,61 @@
 </div>
 
 
-<!--
+<!--card view for shows all the collections-->
 <div class="container">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-        &lt;!&ndash; Iterate over the collections &ndash;&gt;
-        <div class="col" style="padding: 10px" th:each="collection : ${collections}">
+        <!-- Iterate over the collections -->
+        <div class="col" style="padding: 10px" th:each="collection : ${userCollection}">
 
             <div id="main-card" class="card" style="width: 100%;">
-                &lt;!&ndash;Top Edit & delete buttons&ndash;&gt;
+                <!--Top Edit & delete buttons-->
                 <div class="d-flex justify-content-end p-2" style="margin: 5px">
                     <button id="edit-btn" style="margin: 2px" class="btn btn-outline-secondary">Edit</button>
                     <button style="margin: 2px" class="btn btn-outline-danger">Delete</button>
                 </div>
-                &lt;!&ndash;=========================&ndash;&gt;
+                <!--=========================-->
 
-                &lt;!&ndash;middle side by side info & image option&ndash;&gt;
+                <!--middle side by side info & image option-->
                 <div class="d-flex">
                     <div id="text-div" class="w-50 p-2">
                         <div>
                             <h5>Title</h5>
-                            <p th:text="${collection.title}">Title name here</p>
+                            <p th:text="${collection.title}"></p>
                         </div>
                         <div>
                             <h5>Description</h5>
-                            <p th:text="${collection.description}">Some description about collection and items.</p>
+                            <p th:text="${collection.description}"></p>
                         </div>
                     </div>
 
                     <div class="w-50 p-2" style="text-align: center">
-                        &lt;!&ndash; Display the cover photo if it exists &ndash;&gt;
-                        <img th:src="@{'data:image/jpeg;base64,' + ${#strings.bytesToBase64(collection.coverPhoto.bytes)}}"
+                        <!-- Display the cover photo if it exists -->
+                        <img th:src="@{'/user/image/' + ${collection.id}}"
                              class="img-fluid"
                              alt="Cover Photo"
-                             style="width: 100px; height: 100px;" />
+                             style="width: 150px; height: 150px;" />
                     </div>
                 </div>
-                &lt;!&ndash;============================&ndash;&gt;
+                <!--============================-->
 
-                &lt;!&ndash; Down date & See Collection button &ndash;&gt;
+                <!-- Down date & See Collection button -->
                 <div class="d-flex justify-content-between p-2">
                     <div>
-                        <p class="mb-0" th:text="'Date: ' + ${collection.collection_creation_date}">Date : __/__/____</p>
+                        <p class="mb-0" th:text="${collection.collection_creation_date}"></p>
                     </div>
                     <div>
                         <button type="button" class="btn btn-outline-info">See Collection</button>
                     </div>
                 </div>
-                &lt;!&ndash; ============================ &ndash;&gt;
+                <!-- ============================ -->
 
             </div>
 
         </div>
-        &lt;!&ndash; End of iteration &ndash;&gt;
+        <!-- End of iteration -->
     </div>
 </div>
--->
 
 <!--
 <div class="container">
