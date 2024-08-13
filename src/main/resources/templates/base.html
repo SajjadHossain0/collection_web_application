@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <link rel="stylesheet"
               href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"/>
+        <link th:href="@{/css/themeStyle.css}" rel="stylesheet" />
         <title>Collection's</title>
     </section>
 
@@ -61,13 +62,11 @@
                     <button type="submit" class="btn btn-danger btn-sm mx-1" style="margin: 5px;">Logout</button>
                 </form>
                 <!--logout section close-->
-
                 <div>
                     <a id="theme-toggle" class="btn" style="margin: 5px;">
                         <i id="theme-icon" class="fa-solid"></i>
                     </a>
                 </div>
-
             </div>
         </div>
     </nav>
@@ -75,6 +74,7 @@
 
     <!--Themes-->
     <style>
+
         /* Light Theme (default) */
         body.light {
             background-color: white;
@@ -159,7 +159,6 @@
         #main-navbar.dark .navbar-toggler-icon {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' linecap='round' linejoin='round' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
-
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -192,10 +191,11 @@
             } else {
                 themeIcon.classList.remove('fa-moon');
                 themeIcon.classList.add('fa-sun');
-
             }
         }
     </script>
+    <script th:src="@{/js/themeJs.js}"></script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
             integrity="sha384-IQsoLXlUFAW8xGowp6SuQO2Upj/5aAe/d8O4pD+eF2OkSG3aWoi4shXDnAj/6j2M"

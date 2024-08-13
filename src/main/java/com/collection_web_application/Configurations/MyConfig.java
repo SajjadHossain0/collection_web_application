@@ -28,7 +28,7 @@ public class MyConfig {
         return httpSecurity
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/register", "/login").permitAll()
-                        .requestMatchers("/user").hasRole("USER")
+                        .requestMatchers("/user/**","/add_collection").hasRole("USER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/block","/unblock","/delete","/add_admin","/remove_admin").hasRole("ADMIN")
                         .anyRequest().authenticated())

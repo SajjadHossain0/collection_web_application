@@ -3,10 +3,13 @@ package com.collection_web_application.Entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "user_table", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,15 +25,17 @@ public class User {
     private String password;
 
     private String role;
-
     private boolean active = true;
     private String lastLoginTime;
     private String registrationTime;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<UserCollection> collections;
+
     public User() {
     }
 
-    public User(Long id, String name, String email, String password, String role, boolean active, String lastLoginTime, String registrationTime) {
+    public User(Long id, String name, String email, String password, String role, boolean active, String lastLoginTime, String registrationTime, Set<UserCollection> collections) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -39,6 +44,7 @@ public class User {
         this.active = active;
         this.lastLoginTime = lastLoginTime;
         this.registrationTime = registrationTime;
+        this.collections = collections;
     }
 
     public Long getId() {
@@ -103,5 +109,13 @@ public class User {
 
     public void setRegistrationTime(String registrationTime) {
         this.registrationTime = registrationTime;
+    }
+
+    public Set<UserCollection> getCollections() {
+        return collections;
+    }
+
+    public void setCollections(Set<UserCollection> collections) {
+        this.collections = collections;
     }
 }

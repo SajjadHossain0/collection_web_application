@@ -1,0 +1,112 @@
+/*=========== theme for navbar =========*/
+body.light {
+    background-color: white;
+    color: black;
+}
+body.dark {
+    background-color: #2c2c2c;
+    color: white;
+}
+
+#main-navbar.light {
+    background-color: #f8f9fa;
+    color: black;
+}
+#main-navbar.dark {
+    background-color: #393838;
+    color: white;
+}
+
+#main-navbar.light .nav-link {
+    color: black;
+}
+#main-navbar.dark .nav-link {
+    color: white;
+}
+
+#main-navbar.light .btn-outline-primary {
+    color: black;
+    border-color: black;
+}
+#main-navbar.dark .btn-outline-primary {
+    color: white;
+    border-color: white;
+}
+
+#main-navbar.light .btn-outline-primary:hover {
+    background-color: black;
+    color: white;
+}
+#main-navbar.dark .btn-outline-primary:hover {
+    background-color: white;
+    color: black;
+}
+
+#main-navbar.light #navbar-brand {
+    color: black;
+}
+#main-navbar.dark #navbar-brand {
+    color: white;
+}
+
+#main-navbar.light .navbar-toggler {
+    border-color: black;
+}
+#main-navbar.dark .navbar-toggler {
+    border-color: white;
+}
+
+#main-navbar.light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 1%29' stroke-width='2' linecap='round' linejoin='round' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+#main-navbar.dark .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' linecap='round' linejoin='round' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+#main-navbar.light #navbar-search-input {
+    background-color: white;
+}
+#main-navbar.dark #navbar-search-input {
+    background-color: #393838;
+    color: white;
+}
+
+/*=========== theme for user_page =========*/
+
+#main-card.light {
+    background-color: white;
+    color: black;
+}
+#main-card.dark {
+    background-color: #2c2c2c;
+    color: white;
+}
+
+#main-card.light #text-div {
+    color: black;
+}
+#main-card.dark #text-div {
+    color: white;
+}
+
+#main-card.dark #edit-btn {
+    color: white;
+}
+
+#modal.dark{
+    background-color: #2c2c2c;
+}
+
+/*addCollectionModal*/
+
+/*=========== theme for admin_page =========*/
+
+#user-table.light {
+    background-color: white;
+    color: black;
+}
+#user-table.dark {
+    background-color: #2c2c2c;
+    color: white;
+}
+

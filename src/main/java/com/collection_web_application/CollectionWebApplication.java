@@ -3,7 +3,7 @@ package com.collection_web_application;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.collection_web_application")
 public class CollectionWebApplication {
 
 	public static void main(String[] args) {
