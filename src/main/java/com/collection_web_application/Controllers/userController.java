@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -69,26 +70,18 @@ public class userController {
     }
 
 
-
-
     @PostMapping("/add_collection")
-    public String addCollection(
-            @RequestParam("title") String title,
-            @RequestParam("description") String description,
-            @RequestParam("coverPhoto") MultipartFile coverPhoto,
-            Principal principal, // This provides the current user's principal
-            Model model) throws IOException, SQLException {
+    public String addCollection(@RequestParam("title") String title,
+                                @RequestParam("description") String description,
+                                @RequestParam("coverPhoto") MultipartFile coverPhoto,
+                                Principal principal) throws IOException, SQLException {
 
         UserCollection userCollection = new UserCollection();
         userCollection.setTitle(title);
         userCollection.setDescription(description);
 
-        // Convert cover photo to Base64 and store it as a string
-        //userCollection.setCoverPhoto(Base64.getEncoder().encodeToString(coverPhoto.getBytes()));
 
-        //userCollection.setCoverPhoto(coverPhoto.getOriginalFilename());
-
-// Convert cover photo to Blob
+        // Convert cover photo to Blob
         if (!coverPhoto.isEmpty()) {
             InputStream inputStream = coverPhoto.getInputStream();
             byte[] bytes = inputStream.readAllBytes();
@@ -109,6 +102,57 @@ public class userController {
 
         return "redirect:/user"; // Redirect to a list of collections or another page
     }
+
+
+    @PostMapping("/collection/delete")
+    public String deleteCollection(
+            @RequestParam("collectionId") Long collectionId,
+            Principal principal) {
+
+        // Get the currently logged-in user
+        User user = userRepository.findByEmail(principal.getName());
+
+        // Retrieve the collection by ID and check if it belongs to the current user
+        Optional<UserCollection> collection = userCollectionRepository.findById(collectionId);
+
+        if (collection.isPresent() && collection.get().getUser().equals(user)) {
+            userCollectionRepository.delete(collection.get());
+        }
+
+        return "redirect:/user"; // Redirect to the user's collection page
+    }
+
+    @PostMapping("/edit_collection")
+    public String editCollection(
+            @RequestParam("id") Long id,
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam("coverPhoto") MultipartFile coverPhoto) throws IOException, SQLException {
+
+        Optional<UserCollection> optionalCollection = userCollectionRepository.findById(id);
+
+        if (optionalCollection.isPresent()) {
+            UserCollection editedUserCollection = optionalCollection.get();
+            editedUserCollection.setTitle(title);
+            editedUserCollection.setDescription(description);
+
+            if (!coverPhoto.isEmpty()) {
+                InputStream inputStream = coverPhoto.getInputStream();
+                byte[] bytes = inputStream.readAllBytes();
+                Blob blob = new SerialBlob(bytes);
+                editedUserCollection.setCoverPhoto(blob);
+            }
+
+            userCollectionRepository.save(editedUserCollection);
+        }
+
+        return "redirect:/user";
+    }
+
+
+
+
+
 
 
 }

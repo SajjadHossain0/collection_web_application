@@ -25,4 +25,5 @@ public class UserCollectionServiceImpl implements UserCollectionService {
         return userCollectionRepository.findByUser(user);
     }
 
+
 }

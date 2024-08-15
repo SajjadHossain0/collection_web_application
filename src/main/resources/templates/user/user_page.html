@@ -1,5 +1,4 @@
 <!--Authenticated user-->
-
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
@@ -10,6 +9,7 @@
 <body>
 <section th:insert="~{base :: navbar}"></section>
 
+<!--Addd to collection button-->
 <div class="container" style="text-align: center">
     <div class="d-grid gap-2" style="margin-top: 15px">
     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addCollectionModal" >Add new collection</button>
@@ -37,7 +37,7 @@
                         <label for="title" class="form-label">Title</label>
                         <input type="text" class="form-control" id="title" name="title"
                                maxlength="20"
-                               oninput="updateCharacterCountTitle()" required >
+                               oninput="updateCharacterCount()" required >
                         <small id="charCountTitle" class="form-text text-muted">20 characters remaining.</small>
 
                     </div>
@@ -47,7 +47,7 @@
                         <textarea class="form-control" id="description" name="description" rows="4"
                                   placeholder="Enter a detailed description..."
                                   maxlength="150" required
-                                  oninput="updateCharacterCountDescription()"></textarea>
+                                  oninput="updateCharacterCount()"></textarea>
                         <small id="charCountDescription" class="form-text text-muted">150 characters remaining.</small>
                     </div>
 
@@ -58,6 +58,46 @@
     </div>
 </div>
 
+<!-- Modal for edit collections -->
+<div class="modal fade" id="editCollectionModal" tabindex="-1" aria-labelledby="editCollectionModalLabel" aria-hidden="true">
+    <div id="edit-modal-dialog" class="modal-dialog">
+        <div id="edit-modal-content" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCollectionModalLabel">Edit Collection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" th:action="@{/user/edit_collection}" enctype="multipart/form-data">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                    <input type="hidden" id="editCollectionId" name="id" />
+
+                    <div class="mb-3">
+                        <label for="editCoverPhoto" class="form-label">Change Cover Photo (Optional)</label>
+                        <input type="file" class="form-control" id="editCoverPhoto" name="coverPhoto" accept="image/*">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="editTitle" name="title"
+                               maxlength="20"
+                               oninput="updateEditCharacterCount()" required>
+                        <small id="editCharCountTitle" class="form-text text-muted">20 characters remaining.</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="editDescription" name="description" rows="4"
+                                  maxlength="150"
+                                  oninput="updateEditCharacterCount()" required></textarea>
+                        <small id="editCharCountDescription" class="form-text text-muted">150 characters remaining.</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark w-100">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--card view for shows all the collections-->
 <div class="container">
@@ -69,8 +109,13 @@
             <div id="main-card" class="card" style="width: 100%;">
                 <!--Top Edit & delete buttons-->
                 <div class="d-flex justify-content-end p-2" style="margin: 5px">
-                    <button id="edit-btn" style="margin: 2px" class="btn btn-outline-secondary">Edit</button>
-                    <button style="margin: 2px" class="btn btn-outline-danger">Delete</button>
+                    <button id="edit-btn" style="margin: 2px" class="btn btn-outline-secondary"
+                            th:data-id="${collection.id}" th:data-title="${collection.title}"
+                            th:data-description="${collection.description}" data-bs-toggle="modal"
+                            data-bs-target="#editCollectionModal">Edit</button>
+                    <button id="deleteBtn" class="btn btn-outline-danger"
+                            th:onclick="'deleteCollection(' + ${collection.id} + ')'">Delete</button>
+
                 </div>
                 <!--=========================-->
 
@@ -116,21 +161,75 @@
 </div>
 
 <script>
-    function updateCharacterCountTitle(){
-        const textarea = document.getElementById('title');
-        const charCount = document.getElementById('charCountTitle');
-        const maxLength = textarea.getAttribute('maxlength');
-        const currentLength = textarea.value.length;
+    document.addEventListener('DOMContentLoaded', function() {
+        const editButtons = document.querySelectorAll('#edit-btn');
+        const editTitle = document.getElementById('editTitle');
+        const editDescription = document.getElementById('editDescription');
+        const editCollectionId = document.getElementById('editCollectionId');
 
-        charCount.textContent = `${maxLength - currentLength} characters remaining.`;
+        editButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const collectionId = this.getAttribute('data-id');
+                const collectionTitle = this.getAttribute('data-title');
+                const collectionDescription = this.getAttribute('data-description');
+
+                editTitle.value = collectionTitle;
+                editDescription.value = collectionDescription;
+                editCollectionId.value = collectionId;
+
+                // Update character counts
+                updateEditCharacterCount();
+            });
+        });
+    });
+    function updateEditCharacterCount(){
+        const editTitletextarea = document.getElementById('editTitle');
+        const editTitlecharCount = document.getElementById('editCharCountTitle');
+        const editTitlemaxLength = editTitletextarea.getAttribute('maxlength');
+        const editTitlecurrentLength = editTitletextarea.value.length;
+        editTitlecharCount.textContent = `${editTitlemaxLength - editTitlecurrentLength} characters remaining.`;
+
+        const editDescriptiontextarea = document.getElementById('editDescription');
+        const editDescriptioncharCount = document.getElementById('editCharCountDescription');
+        const editDescriptionmaxLength = editDescriptiontextarea.getAttribute('maxlength');
+        const editDescriptioncurrentLength = editDescriptiontextarea.value.length;
+        editDescriptioncharCount.textContent = `${editDescriptionmaxLength - editDescriptioncurrentLength} characters remaining.`;
     }
-    function updateCharacterCountDescription() {
-        const textarea = document.getElementById('description');
-        const charCount = document.getElementById('charCountDescription');
-        const maxLength = textarea.getAttribute('maxlength');
-        const currentLength = textarea.value.length;
+    function updateCharacterCount(){
+        // for title input
+        const title_textarea = document.getElementById('title');
+        const title_charCount = document.getElementById('charCountTitle');
+        const title_maxLength = title_textarea.getAttribute('maxlength');
+        const title_currentLength = title_textarea.value.length;
+        title_charCount.textContent = `${title_maxLength - title_currentLength} characters remaining.`;
 
-        charCount.textContent = `${maxLength - currentLength} characters remaining.`;
+        // for description input
+        const description_textarea = document.getElementById('description');
+        const description_charCount = document.getElementById('charCountDescription');
+        const description_maxLength = description_textarea.getAttribute('maxlength');
+        const description_currentLength = description_textarea.value.length;
+        description_charCount.textContent = `${description_maxLength - description_currentLength} characters remaining.`;
+    }
+    function deleteCollection(collectionId) {
+        if (confirm("Are you sure you want to delete this collection?")) {
+            const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+            const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+            fetch('/user/collection/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    [csrfHeader]: csrfToken
+                },
+                body: new URLSearchParams({ 'collectionId': collectionId })
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload(); // Reload the page to reflect changes
+                } else {
+                    alert('Failed to delete collection.');
+                }
+            });
+        }
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
