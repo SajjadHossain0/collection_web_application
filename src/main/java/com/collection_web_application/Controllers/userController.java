@@ -69,7 +69,6 @@ public class userController {
         }
     }
 
-
     @PostMapping("/add_collection")
     public String addCollection(@RequestParam("title") String title,
                                 @RequestParam("description") String description,
@@ -102,7 +101,6 @@ public class userController {
 
         return "redirect:/user"; // Redirect to a list of collections or another page
     }
-
 
     @PostMapping("/collection/delete")
     public String deleteCollection(
@@ -150,6 +148,11 @@ public class userController {
     }
 
 
+    @GetMapping("/myCollection/item")
+    public String itemList(){
+
+        return "item_page";
+    }
 
 
 

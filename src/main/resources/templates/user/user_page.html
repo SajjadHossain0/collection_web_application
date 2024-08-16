@@ -12,7 +12,7 @@
 <!--Addd to collection button-->
 <div class="container" style="text-align: center">
     <div class="d-grid gap-2" style="margin-top: 15px">
-    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addCollectionModal" >Add new collection</button>
+    <button th:text="#{lang.addbtn}" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addCollectionModal" >Add new collection</button>
     </div>
 </div>
 
@@ -21,7 +21,7 @@
     <div id="modal-dialog" class="modal-dialog">
         <div id="modal-content" class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addCollectionModalLabel">Add new collection</h5>
+                <h5 th:text="#{lang.addbtn}" class="modal-title" id="addCollectionModalLabel">Add new collection</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -29,12 +29,12 @@
                     <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 
                     <div class="mb-3">
-                        <label for="coverPhoto" class="form-label">Choose Cover Photo</label>
+                        <label th:text="#{lang.coverpic}" for="coverPhoto" class="form-label">Choose Cover Photo</label>
                         <input type="file" class="form-control" id="coverPhoto" name="coverPhoto" accept="image/*" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
+                        <label th:text="#{lang.addtitle}" for="title" class="form-label">Title</label>
                         <input type="text" class="form-control" id="title" name="title"
                                maxlength="20"
                                oninput="updateCharacterCount()" required >
@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
+                        <label th:text="#{lang.adddescription}" for="description" class="form-label">Description</label>
                         <textarea class="form-control" id="description" name="description" rows="4"
                                   placeholder="Enter a detailed description..."
                                   maxlength="150" required
@@ -51,7 +51,7 @@
                         <small id="charCountDescription" class="form-text text-muted">150 characters remaining.</small>
                     </div>
 
-                    <button type="submit" class="btn btn-dark w-100">Add Collection</button>
+                    <button th:text="#{lang.addcollection}" type="submit" class="btn btn-dark w-100">Add Collection</button>
                 </form>
             </div>
         </div>
@@ -63,7 +63,7 @@
     <div id="edit-modal-dialog" class="modal-dialog">
         <div id="edit-modal-content" class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editCollectionModalLabel">Edit Collection</h5>
+                <h5 th:text="#{lang.editcollection}" class="modal-title" id="editCollectionModalLabel">Edit Collection</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -72,12 +72,12 @@
                     <input type="hidden" id="editCollectionId" name="id" />
 
                     <div class="mb-3">
-                        <label for="editCoverPhoto" class="form-label">Change Cover Photo (Optional)</label>
+                        <label th:text="#{lang.editcover}" for="editCoverPhoto" class="form-label">Change Cover Photo (Optional)</label>
                         <input type="file" class="form-control" id="editCoverPhoto" name="coverPhoto" accept="image/*">
                     </div>
 
                     <div class="mb-3">
-                        <label for="editTitle" class="form-label">Title</label>
+                        <label th:text="#{lang.addtitle}" for="editTitle" class="form-label">Title</label>
                         <input type="text" class="form-control" id="editTitle" name="title"
                                maxlength="20"
                                oninput="updateEditCharacterCount()" required>
@@ -85,14 +85,14 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="editDescription" class="form-label">Description</label>
+                        <label th:text="#{lang.adddescription}" for="editDescription" class="form-label">Description</label>
                         <textarea class="form-control" id="editDescription" name="description" rows="4"
                                   maxlength="150"
                                   oninput="updateEditCharacterCount()" required></textarea>
                         <small id="editCharCountDescription" class="form-text text-muted">150 characters remaining.</small>
                     </div>
 
-                    <button type="submit" class="btn btn-dark w-100">Save Changes</button>
+                    <button th:text="#{lang.editbtn}" type="submit" class="btn btn-dark w-100">Save Changes</button>
                 </form>
             </div>
         </div>
@@ -112,9 +112,11 @@
                     <button id="edit-btn" style="margin: 2px" class="btn btn-outline-secondary"
                             th:data-id="${collection.id}" th:data-title="${collection.title}"
                             th:data-description="${collection.description}" data-bs-toggle="modal"
-                            data-bs-target="#editCollectionModal">Edit</button>
+                            data-bs-target="#editCollectionModal"
+                    th:text="#{lang.editbutton}">Edit</button>
                     <button id="deleteBtn" class="btn btn-outline-danger"
-                            th:onclick="'deleteCollection(' + ${collection.id} + ')'">Delete</button>
+                            th:onclick="'deleteCollection(' + ${collection.id} + ')'"
+                            th:text="#{lang.deletebutton}">Delete</button>
 
                 </div>
                 <!--=========================-->
@@ -123,11 +125,11 @@
                 <div class="d-flex">
                     <div id="text-div" class="w-50 p-2">
                         <div>
-                            <h5>Title</h5>
+                            <h5 th:text="#{lang.addtitle}">Title</h5>
                             <p th:text="${collection.title}"></p>
                         </div>
                         <div>
-                            <h5>Description</h5>
+                            <h5 th:text="#{lang.adddescription}">Description</h5>
                             <p th:text="${collection.description}"></p>
                         </div>
                     </div>
@@ -148,7 +150,7 @@
                         <p class="mb-0" th:text="${collection.collection_creation_date}"></p>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-outline-info">See Collection</button>
+                        <button th:text="#{lang.seecollection}" th:href="@{/user/myCollection/item}" type="button" class="btn btn-outline-info">See Collection</button>
                     </div>
                 </div>
                 <!-- ============================ -->

@@ -21,7 +21,7 @@
 <section th:fragment="navbar">
     <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container-fluid">
-            <a id="navbar-brand" class="navbar-brand" href="/">Collection's</a>
+            <a th:text="#{lang.title}" id="navbar-brand" class="navbar-brand" href="/">Collection's</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,7 @@
                         <a th:text="#{lang.home}" class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link active" aria-current="page" href="/user">My Collection's</a>
+                        <a th:text="#{lang.collection}" class="nav-link active" aria-current="page" href="/user">My Collection's</a>
                     </li>
                 </ul>
 
@@ -43,11 +43,11 @@
 
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0" sec:authorize="!isAuthenticated()">
                     <li class="nav-item">
-                        <a href="/register" class="btn btn-outline-primary btn-sm mx-1"
+                        <a th:text="#{lang.register}" href="/register" class="btn btn-outline-primary btn-sm mx-1"
                            style="margin: 5px;">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/login" class="btn btn-outline-primary btn-sm mx-1" style="margin: 5px;">Login</a>
+                        <a th:text="#{lang.login}" href="/login" class="btn btn-outline-primary btn-sm mx-1" style="margin: 5px;">Login</a>
                     </li>
                 </ul>
 
@@ -60,7 +60,7 @@
 
                 <form method="post" action="/logout" sec:authorize="isAuthenticated()" class="d-inline">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                    <button type="submit" class="btn btn-danger btn-sm mx-1" style="margin: 5px;">Logout</button>
+                    <button th:text="#{lang.logout}" type="submit" class="btn btn-danger btn-sm mx-1" style="margin: 5px;">Logout</button>
                 </form>
                 <!--logout section close-->
                 <div>
