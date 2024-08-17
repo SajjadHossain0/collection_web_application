@@ -15,34 +15,33 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-6">
-            <h1 class="text-center mb-4">Login</h1>
+            <h1 th:text="#{lang.login}" class="text-center mb-4">Login</h1>
 
             <!-- Error message block -->
             <div th:if="${param.error}"
                  class="alert alert-danger text-center"
                  role="alert">
-                <strong style="text-align: center">Something went wrong</strong>
+                <strong th:text="#{lang.login_error}" style="text-align: center">Something went wrong</strong>
             </div>
 
 
 
             <form th:action="@{/login}" method="post" class="shadow p-4 rounded">
                 <div class="mb-3">
-                    <label for="username" class="form-label">E-mail</label>
+                    <label th:text="#{lang.email}" for="username" class="form-label">E-mail</label>
                     <input type="text" id="username" name="username" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label th:text="#{lang.pass}" for="password" class="form-label">Password</label>
                     <input type="password" id="password" name="password" class="form-control" required>
                 </div>
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button th:text="#{lang.login}" type="submit" class="btn btn-primary">Login</button>
                 </div>
 
                 <div class="d-grid">
                     <strong class="text-center" style="padding: 10px">Don't have account? <a class="ms-2"
-                                                                                             href="/register">Register
-                        here</a>
+                         href="/register">Register here</a>
                     </strong>
                 </div>
             </form>
