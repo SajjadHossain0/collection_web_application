@@ -1,0 +1,60 @@
+###use this on entity to define the cover photo of collection
+@Lob
+@Column(name = "cover_photo")
+private Blob coverPhoto;
+
+getters, setters and constructor
+
+
+###use this on controller to display and getting the image data
+    @GetMapping("/image/{id}")
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") Long id) throws SQLException {
+        Optional<UserCollection> collection = userCollectionRepository.findById(id);
+
+        if (collection.isPresent() && collection.get().getCoverPhoto() != null) {
+            Blob coverPhotoBlob = collection.get().getCoverPhoto();
+            byte[] imageBytes = coverPhotoBlob.getBytes(1, (int) coverPhotoBlob.length());
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);  // You can adjust this if your image is PNG
+            headers.setContentLength(imageBytes.length);
+
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+###this is for the postmapping to save the image
+// Convert cover photo to Blob
+        if (!coverPhoto.isEmpty()) {
+            InputStream inputStream = coverPhoto.getInputStream();
+            byte[] bytes = inputStream.readAllBytes();
+            Blob blob = new SerialBlob(bytes);
+            userCollection.setCoverPhoto(blob);
+        }
+
+
+
+###this is for the html page to show image file
+
+#add collection modal
+<div class="mb-3">
+<label th:text="#{lang.coverpic}" for="coverPhoto" class="form-label">Choose Cover Photo</label>
+<input type="file" class="form-control" id="coverPhoto" name="coverPhoto" accept="image/*" required>
+</div>
+
+#edit collection modal
+<div class="mb-3">
+<label th:text="#{lang.editcover}" for="editCoverPhoto" class="form-label">Change Cover Photo (Optional)</label>
+<input type="file" class="form-control" id="editCoverPhoto" name="coverPhoto" accept="image/*">
+</div>
+
+#for cover view
+<div class="w-50 p-2" style="text-align: center">
+<!-- Display the cover photo if it exists -->
+<img th:src="@{'/user/image/' + ${collection.id}}"
+class="img-fluid"
+alt="Cover Photo"
+style="width: 150px; height: 150px;" />
+</div>

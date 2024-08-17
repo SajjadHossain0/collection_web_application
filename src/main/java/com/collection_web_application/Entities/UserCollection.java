@@ -16,10 +16,6 @@ public class UserCollection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
-    @Column(name = "cover_photo")
-    private Blob coverPhoto;
-
     @NotNull
     @Size(max = 20)
     @Column(length = 20)
@@ -39,9 +35,8 @@ public class UserCollection {
     public UserCollection() {
     }
 
-    public UserCollection(Long id, Blob coverPhoto, String title, String description, String collection_creation_date, User user) {
+    public UserCollection(Long id, String title, String description, String collection_creation_date, User user) {
         this.id = id;
-        this.coverPhoto = coverPhoto;
         this.title = title;
         this.description = description;
         this.collection_creation_date = collection_creation_date;
@@ -54,14 +49,6 @@ public class UserCollection {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Blob getCoverPhoto() {
-        return coverPhoto;
-    }
-
-    public void setCoverPhoto(Blob coverPhoto) {
-        this.coverPhoto = coverPhoto;
     }
 
     public String getTitle() {

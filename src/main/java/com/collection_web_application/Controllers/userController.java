@@ -51,23 +51,6 @@ public class userController {
         return "user/user_page";
     }
 
-    @GetMapping("/image/{id}")
-    public ResponseEntity<byte[]> getImage(@PathVariable("id") Long id) throws SQLException {
-        Optional<UserCollection> collection = userCollectionRepository.findById(id);
-
-        if (collection.isPresent() && collection.get().getCoverPhoto() != null) {
-            Blob coverPhotoBlob = collection.get().getCoverPhoto();
-            byte[] imageBytes = coverPhotoBlob.getBytes(1, (int) coverPhotoBlob.length());
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.IMAGE_JPEG);  // You can adjust this if your image is PNG
-            headers.setContentLength(imageBytes.length);
-
-            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
 
     @PostMapping("/add_collection")
     public String addCollection(@RequestParam("title") String title,
@@ -78,15 +61,6 @@ public class userController {
         UserCollection userCollection = new UserCollection();
         userCollection.setTitle(title);
         userCollection.setDescription(description);
-
-
-        // Convert cover photo to Blob
-        if (!coverPhoto.isEmpty()) {
-            InputStream inputStream = coverPhoto.getInputStream();
-            byte[] bytes = inputStream.readAllBytes();
-            Blob blob = new SerialBlob(bytes);
-            userCollection.setCoverPhoto(blob);
-        }
 
         // Format the current date and time
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a dd MMM yyyy");
@@ -133,13 +107,6 @@ public class userController {
             UserCollection editedUserCollection = optionalCollection.get();
             editedUserCollection.setTitle(title);
             editedUserCollection.setDescription(description);
-
-            if (!coverPhoto.isEmpty()) {
-                InputStream inputStream = coverPhoto.getInputStream();
-                byte[] bytes = inputStream.readAllBytes();
-                Blob blob = new SerialBlob(bytes);
-                editedUserCollection.setCoverPhoto(blob);
-            }
 
             userCollectionRepository.save(editedUserCollection);
         }
