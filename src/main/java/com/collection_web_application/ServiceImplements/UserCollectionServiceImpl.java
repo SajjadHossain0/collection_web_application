@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserCollectionServiceImpl implements UserCollectionService {
@@ -23,6 +24,12 @@ public class UserCollectionServiceImpl implements UserCollectionService {
     @Override
     public List<UserCollection> getCollectionsByUser(User user) {
         return userCollectionRepository.findByUser(user);
+    }
+
+    @Override
+    public Optional<UserCollection> getCollectionById(Long id) {
+        return Optional.ofNullable(userCollectionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Collection not found with id: " + id)));
     }
 
 

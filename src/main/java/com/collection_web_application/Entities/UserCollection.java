@@ -32,15 +32,43 @@ public class UserCollection {
     private User user;
 
 
+    private Boolean custom_string1_state;
+    private String custom_string1_name;
+    private Boolean custom_int1_state;
+    private String custom_int1_name;
+
+    private Boolean custom_string2_state;
+    private String custom_string2_name;
+    private Boolean custom_int2_state;
+    private String custom_int2_name;
+
+    private Boolean custom_string3_state;
+    private String custom_string3_name;
+    private Boolean custom_int3_state;
+    private String custom_int3_name;
+
+
     public UserCollection() {
     }
 
-    public UserCollection(Long id, String title, String description, String collection_creation_date, User user) {
+    public UserCollection(Long id, String title, String description, String collection_creation_date, User user, Boolean custom_string1_state, String custom_string1_name, Boolean custom_int1_state, String custom_int1_name, Boolean custom_string2_state, String custom_string2_name, Boolean custom_int2_state, String custom_int2_name, Boolean custom_string3_state, String custom_string3_name, Boolean custom_int3_state, String custom_int3_name) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.collection_creation_date = collection_creation_date;
         this.user = user;
+        this.custom_string1_state = custom_string1_state;
+        this.custom_string1_name = custom_string1_name;
+        this.custom_int1_state = custom_int1_state;
+        this.custom_int1_name = custom_int1_name;
+        this.custom_string2_state = custom_string2_state;
+        this.custom_string2_name = custom_string2_name;
+        this.custom_int2_state = custom_int2_state;
+        this.custom_int2_name = custom_int2_name;
+        this.custom_string3_state = custom_string3_state;
+        this.custom_string3_name = custom_string3_name;
+        this.custom_int3_state = custom_int3_state;
+        this.custom_int3_name = custom_int3_name;
     }
 
     public Long getId() {
@@ -81,5 +109,101 @@ public class UserCollection {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Boolean getCustom_string1_state() {
+        return custom_string1_state;
+    }
+
+    public void setCustom_string1_state(Boolean custom_string1_state) {
+        this.custom_string1_state = custom_string1_state;
+    }
+
+    public String getCustom_string1_name() {
+        return custom_string1_name;
+    }
+
+    public void setCustom_string1_name(String custom_string1_name) {
+        this.custom_string1_name = custom_string1_name;
+    }
+
+    public Boolean getCustom_int1_state() {
+        return custom_int1_state;
+    }
+
+    public void setCustom_int1_state(Boolean custom_int1_state) {
+        this.custom_int1_state = custom_int1_state;
+    }
+
+    public String getCustom_int1_name() {
+        return custom_int1_name;
+    }
+
+    public void setCustom_int1_name(String custom_int1_name) {
+        this.custom_int1_name = custom_int1_name;
+    }
+
+    public Boolean getCustom_string2_state() {
+        return custom_string2_state;
+    }
+
+    public void setCustom_string2_state(Boolean custom_string2_state) {
+        this.custom_string2_state = custom_string2_state;
+    }
+
+    public String getCustom_string2_name() {
+        return custom_string2_name;
+    }
+
+    public void setCustom_string2_name(String custom_string2_name) {
+        this.custom_string2_name = custom_string2_name;
+    }
+
+    public Boolean getCustom_int2_state() {
+        return custom_int2_state;
+    }
+
+    public void setCustom_int2_state(Boolean custom_int2_state) {
+        this.custom_int2_state = custom_int2_state;
+    }
+
+    public String getCustom_int2_name() {
+        return custom_int2_name;
+    }
+
+    public void setCustom_int2_name(String custom_int2_name) {
+        this.custom_int2_name = custom_int2_name;
+    }
+
+    public Boolean getCustom_string3_state() {
+        return custom_string3_state;
+    }
+
+    public void setCustom_string3_state(Boolean custom_string3_state) {
+        this.custom_string3_state = custom_string3_state;
+    }
+
+    public String getCustom_string3_name() {
+        return custom_string3_name;
+    }
+
+    public void setCustom_string3_name(String custom_string3_name) {
+        this.custom_string3_name = custom_string3_name;
+    }
+
+    public Boolean getCustom_int3_state() {
+        return custom_int3_state;
+    }
+
+    public void setCustom_int3_state(Boolean custom_int3_state) {
+        this.custom_int3_state = custom_int3_state;
+    }
+
+    public String getCustom_int3_name() {
+        return custom_int3_name;
+    }
+
+    public void setCustom_int3_name(String custom_int3_name) {
+        this.custom_int3_name = custom_int3_name;
     }
 }

@@ -12,33 +12,34 @@
 <!--Addd to collection button-->
 <div class="container" style="text-align: center">
     <div class="d-grid gap-2" style="margin-top: 15px">
-    <button th:text="#{lang.addbtn}" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addCollectionModal" >Add new collection</button>
+        <button th:text="#{lang.addbtn}" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                data-bs-target="#addCollectionModal">Add new collection
+        </button>
     </div>
 </div>
 
 <!-- Modal for add new collections -->
-<div class="modal fade" id="addCollectionModal" tabindex="-1" aria-labelledby="addCollectionModalLabel" aria-hidden="true">
-    <div id="modal-dialog" class="modal-dialog">
-        <div id="modal-content" class="modal-content">
+<div class="modal fade" id="addCollectionModal" tabindex="-1" aria-labelledby="addCollectionModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 th:text="#{lang.addbtn}" class="modal-title" id="addCollectionModalLabel">Add new collection</h5>
+                <h5 class="modal-title" id="addCollectionModalLabel" th:text="#{lang.addbtn}">Add New Collection</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="post" th:action="@{/user/add_collection}" enctype="multipart/form-data">
-                    <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 
                     <div class="mb-3">
-                        <label th:text="#{lang.addtitle}" for="title" class="form-label">Title</label>
+                        <label for="title" class="form-label" th:text="#{lang.addtitle}">Title</label>
                         <input type="text" class="form-control" id="title" name="title"
-                               maxlength="20"
-                               oninput="updateCharacterCount()" required >
+                               maxlength="20" oninput="updateCharacterCount()" required>
                         <small id="charCountTitle" class="form-text text-muted">20 characters remaining.</small>
-
                     </div>
 
                     <div class="mb-3">
-                        <label th:text="#{lang.adddescription}" for="description" class="form-label">Description</label>
+                        <label for="description" class="form-label" th:text="#{lang.adddescription}">Description</label>
                         <textarea class="form-control" id="description" name="description" rows="4"
                                   placeholder="Enter a detailed description..."
                                   maxlength="150" required
@@ -46,48 +47,301 @@
                         <small id="charCountDescription" class="form-text text-muted">150 characters remaining.</small>
                     </div>
 
-                    <button th:text="#{lang.addcollection}" type="submit" class="btn btn-dark w-100">Add Collection</button>
+                    <!-- Custom Fields -->
+                    <div class="border p-3 mb-3">
+                        <h6>Custom Fields</h6>
+                        <p class="text-muted small mb-3">Enable and set the field names for custom attributes of your
+                            collection.</p>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_string1_state"
+                                           id="custom_string1">
+                                    <label class="form-check-label" for="custom_string1">Custom String 1</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_string1_name"
+                                       placeholder="Field Name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_int1_state"
+                                           id="custom_int1">
+                                    <label class="form-check-label" for="custom_int1">Custom Integer 1</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_int1_name"
+                                       placeholder="Field Name">
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_string2_state"
+                                           id="custom_string2">
+                                    <label class="form-check-label" for="custom_string2">Custom String 2</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_string2_name"
+                                       placeholder="Field Name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_int2_state"
+                                           id="custom_int2">
+                                    <label class="form-check-label" for="custom_int2">Custom Integer 2</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_int2_name"
+                                       placeholder="Field Name">
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_string3_state"
+                                           id="custom_string3">
+                                    <label class="form-check-label" for="custom_string3">Custom String 3</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_string3_name"
+                                       placeholder="Field Name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_int3_state"
+                                           id="custom_int3">
+                                    <label class="form-check-label" for="custom_int3">Custom Integer 3</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_int3_name"
+                                       placeholder="Field Name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark w-100" th:text="#{lang.addcollection}">Add Collection
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal for edit collections -->
-<div class="modal fade" id="editCollectionModal" tabindex="-1" aria-labelledby="editCollectionModalLabel" aria-hidden="true">
-    <div id="edit-modal-dialog" class="modal-dialog">
-        <div id="edit-modal-content" class="modal-content">
+
+<!--
+<div class="modal fade" id="editCollectionModal" tabindex="-1" aria-labelledby="editCollectionModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 th:text="#{lang.editcollection}" class="modal-title" id="editCollectionModalLabel">Edit Collection</h5>
+                <h5 class="modal-title" id="editCollectionModalLabel" th:text="#{lang.addbtn}">Edit
+                    Collection</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="post" th:action="@{/user/edit_collection}" enctype="multipart/form-data">
-                    <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-                    <input type="hidden" id="editCollectionId" name="id" />
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 
                     <div class="mb-3">
-                        <label th:text="#{lang.addtitle}" for="editTitle" class="form-label">Title</label>
+                        <label for="title" class="form-label" th:text="#{lang.addtitle}">Title</label>
                         <input type="text" class="form-control" id="editTitle" name="title"
-                               maxlength="20"
-                               oninput="updateEditCharacterCount()" required>
+                               maxlength="20" oninput="updateEditCharacterCount()" required>
                         <small id="editCharCountTitle" class="form-text text-muted">20 characters remaining.</small>
                     </div>
 
                     <div class="mb-3">
-                        <label th:text="#{lang.adddescription}" for="editDescription" class="form-label">Description</label>
+                        <label for="editDescription" class="form-label" th:text="#{lang.adddescription}">Description</label>
                         <textarea class="form-control" id="editDescription" name="description" rows="4"
-                                  maxlength="150"
-                                  oninput="updateEditCharacterCount()" required></textarea>
+                                  placeholder="Enter a detailed description..."
+                                  maxlength="150" required
+                                  oninput="updateEditCharacterCount()"></textarea>
                         <small id="editCharCountDescription" class="form-text text-muted">150 characters remaining.</small>
                     </div>
 
-                    <button th:text="#{lang.editbtn}" type="submit" class="btn btn-dark w-100">Save Changes</button>
+                    &lt;!&ndash; Custom Fields &ndash;&gt;
+                    <div class="border p-3 mb-3">
+                        <h6>Custom Fields</h6>
+                        <p class="text-muted small mb-3">Enable and set the field names for custom attributes of your
+                            collection.</p>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_string1_state"
+                                           id="edit_custom_string1">
+                                    <label class="form-check-label" for="edit_custom_string1">Custom String 1</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_string1_name"
+                                       placeholder="Field Name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_int1_state"
+                                           id="edit_custom_int1">
+                                    <label class="form-check-label" for="edit_custom_int1">Custom Integer 1</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_int1_name"
+                                       placeholder="Field Name">
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_string2_state"
+                                           id="edit_custom_string2">
+                                    <label class="form-check-label" for="edit_custom_string2">Custom String 2</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_string2_name"
+                                       placeholder="Field Name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_int2_state"
+                                           id="edit_custom_int2">
+                                    <label class="form-check-label" for="edit_custom_int2">Custom Integer 2</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_int2_name"
+                                       placeholder="Field Name">
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_string3_state"
+                                           id="edit_custom_string3">
+                                    <label class="form-check-label" for="edit_custom_string3">Custom String 3</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_string3_name"
+                                       placeholder="Field Name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_int3_state"
+                                           id="edit_custom_int3">
+                                    <label class="form-check-label" for="edit_custom_int3">Custom Integer 3</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_int3_name"
+                                       placeholder="Field Name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark w-100" th:text="#{lang.addcollection}">Add Collection
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+-->
+
+
+<!-- Modal for edit collections -->
+<div class="modal fade" id="editCollectionModal" tabindex="-1" aria-labelledby="editCollectionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCollectionModalLabel" th:text="#{lang.editcollection}">Edit Collection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" th:action="@{/user/edit_collection}" enctype="multipart/form-data">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                    <input type="hidden" id="editCollectionId" name="id"/>
+
+                    <div class="mb-3">
+                        <label for="editTitle" class="form-label" th:text="#{lang.addtitle}">Title</label>
+                        <input type="text" class="form-control" id="editTitle" name="title"
+                               maxlength="20" oninput="updateEditCharacterCount()" required>
+                        <small id="editCharCountTitle" class="form-text text-muted">20 characters remaining.</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editDescription" class="form-label" th:text="#{lang.adddescription}">Description</label>
+                        <textarea class="form-control" id="editDescription" name="description" rows="4"
+                                  maxlength="150" oninput="updateEditCharacterCount()" required></textarea>
+                        <small id="editCharCountDescription" class="form-text text-muted">150 characters remaining.</small>
+                    </div>
+
+                    <!-- Custom Fields -->
+                    <div class="border p-3 mb-3">
+                        <h6>Custom Fields</h6>
+                        <p class="text-muted small mb-3">Enable and set the field names for custom attributes of your collection.</p>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_string1_state" id="edit_custom_string1">
+                                    <label class="form-check-label" for="edit_custom_string1">Custom String 1</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_string1_name" placeholder="Field Name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_int1_state" id="edit_custom_int1">
+                                    <label class="form-check-label" for="edit_custom_int1">Custom Integer 1</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_int1_name" placeholder="Field Name">
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_string2_state" id="edit_custom_string2">
+                                    <label class="form-check-label" for="edit_custom_string2">Custom String 2</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_string2_name" placeholder="Field Name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_int2_state" id="edit_custom_int2">
+                                    <label class="form-check-label" for="edit_custom_int2">Custom Integer 2</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_int2_name" placeholder="Field Name">
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_string3_state" id="edit_custom_string3">
+                                    <label class="form-check-label" for="edit_custom_string3">Custom String 3</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_string3_name" placeholder="Field Name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="custom_int3_state" id="edit_custom_int3">
+                                    <label class="form-check-label" for="edit_custom_int3">Custom Integer 3</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" name="custom_int3_name" placeholder="Field Name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark w-100" th:text="#{lang.editbtn}">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
 
 <!--card view for shows all the collections-->
 <div class="container">
@@ -103,10 +357,12 @@
                             th:data-id="${collection.id}" th:data-title="${collection.title}"
                             th:data-description="${collection.description}" data-bs-toggle="modal"
                             data-bs-target="#editCollectionModal"
-                    th:text="#{lang.editbutton}">Edit</button>
+                            th:text="#{lang.editbutton}">Edit
+                    </button>
                     <button id="deleteBtn" class="btn btn-outline-danger"
                             th:onclick="'deleteCollection(' + ${collection.id} + ')'"
-                            th:text="#{lang.deletebutton}">Delete</button>
+                            th:text="#{lang.deletebutton}">Delete
+                    </button>
 
                 </div>
                 <!--=========================-->
@@ -132,7 +388,9 @@
                         <p class="mb-0" th:text="${collection.collection_creation_date}"></p>
                     </div>
                     <div>
-                        <button th:text="#{lang.seecollection}" th:href="@{/user/myCollection/item}" type="button" class="btn btn-outline-info">See Collection</button>
+                        <a th:href="@{/user/myCollection/item(id=${collection.id})}"
+                           class="btn btn-outline-info"
+                           th:text="#{lang.seecollection}">See Collection</a>
                     </div>
                 </div>
                 <!-- ============================ -->
@@ -145,14 +403,14 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const editButtons = document.querySelectorAll('#edit-btn');
         const editTitle = document.getElementById('editTitle');
         const editDescription = document.getElementById('editDescription');
         const editCollectionId = document.getElementById('editCollectionId');
 
         editButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const collectionId = this.getAttribute('data-id');
                 const collectionTitle = this.getAttribute('data-title');
                 const collectionDescription = this.getAttribute('data-description');
@@ -166,7 +424,8 @@
             });
         });
     });
-    function updateEditCharacterCount(){
+
+    function updateEditCharacterCount() {
         const editTitletextarea = document.getElementById('editTitle');
         const editTitlecharCount = document.getElementById('editCharCountTitle');
         const editTitlemaxLength = editTitletextarea.getAttribute('maxlength');
@@ -179,7 +438,8 @@
         const editDescriptioncurrentLength = editDescriptiontextarea.value.length;
         editDescriptioncharCount.textContent = `${editDescriptionmaxLength - editDescriptioncurrentLength} characters remaining.`;
     }
-    function updateCharacterCount(){
+
+    function updateCharacterCount() {
         // for title input
         const title_textarea = document.getElementById('title');
         const title_charCount = document.getElementById('charCountTitle');
@@ -194,6 +454,7 @@
         const description_currentLength = description_textarea.value.length;
         description_charCount.textContent = `${description_maxLength - description_currentLength} characters remaining.`;
     }
+
     function deleteCollection(collectionId) {
         if (confirm("Are you sure you want to delete this collection?")) {
             const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
@@ -205,7 +466,7 @@
                     'Content-Type': 'application/x-www-form-urlencoded',
                     [csrfHeader]: csrfToken
                 },
-                body: new URLSearchParams({ 'collectionId': collectionId })
+                body: new URLSearchParams({'collectionId': collectionId})
             }).then(response => {
                 if (response.ok) {
                     window.location.reload(); // Reload the page to reflect changes

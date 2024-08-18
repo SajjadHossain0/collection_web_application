@@ -9,8 +9,53 @@
 <body>
 <section th:insert="~{base :: navbar}"></section>
 
-<h1>item list</h1>
+<div class="container" style="text-align: center">
+    <div class="d-grid gap-2" style="margin-top: 15px">
+        <h3><strong th:text="${collectionItem.title}"></strong> Collection</h3>
+    </div>
+</div>
 
+<div class="container" style="margin-top: 100px;">
+
+    <div class="container" style="text-align: center">
+        <div class="d-grid gap-2" style="margin-bottom: 50px">
+            <button type="button" class="btn" style="margin: 2px; background-color: #4e4ade; color: white; border: none;">Add item</button>
+        </div>
+    </div>
+
+    <table class="table table-striped table-hover" id="user-table">
+    <thead>
+    <tr>
+        <th><input type="checkbox" id="selectAllUser"></th>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Tags</th>
+        <th th:if="${collectionItem.custom_string1_state}" th:text="${collectionItem.custom_string1_name}"></th>
+        <th th:if="${collectionItem.custom_string2_state}" th:text="${collectionItem.custom_string2_name}"></th>
+        <th th:if="${collectionItem.custom_string3_state}" th:text="${collectionItem.custom_string3_name}"></th>
+        <th th:if="${collectionItem.custom_int1_state}" th:text="${collectionItem.custom_int1_name}"></th>
+        <th th:if="${collectionItem.custom_int2_state}" th:text="${collectionItem.custom_int2_name}"></th>
+        <th th:if="${collectionItem.custom_int3_state}" th:text="${collectionItem.custom_int3_name}"></th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><input type="checkbox" class="selectRow"></td>
+        <td>1</td>
+        <td>user</td>
+        <td>tags</td>
+        <td th:if="${collectionItem.custom_string1_state}"></td>
+        <td th:if="${collectionItem.custom_string2_state}"></td>
+        <td th:if="${collectionItem.custom_string3_state}"></td>
+        <td th:if="${collectionItem.custom_int1_state}"></td>
+        <td th:if="${collectionItem.custom_int2_state}"></td>
+        <td th:if="${collectionItem.custom_int3_state}"></td>
+        <td><a type="button" href="#" id="viewBtn" class="btn btn-info" style="margin-right: 5px;">view</a></td>
+    </tr>
+    </tbody>
+</table>
+</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
