@@ -51,46 +51,15 @@ public class userController {
         return "user/user_page";
     }
 
-    /*
-    @PostMapping("/add_collection")
-    public String addCollection(@RequestParam("title") String title,
-                                @RequestParam("description") String description,
-                                Principal principal){
-
-        UserCollection userCollection = new UserCollection();
-        userCollection.setTitle(title);
-        userCollection.setDescription(description);
-
-        // Format the current date and time
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a dd MMM yyyy");
-        String formattedDateTime = LocalDateTime.now().format(formatter);
-        userCollection.setCollection_creation_date(formattedDateTime);
-
-        // Retrieve the user based on the principal's username
-        User user = userRepository.findByEmail(principal.getName());
-        userCollection.setUser(user);
-
-        userCollectionRepository.save(userCollection);
-
-        return "redirect:/user"; // Redirect to a list of collections or another page
-    }
-    */
 
     @PostMapping("/add_collection")
-    public String addCollection(@RequestParam("title") String title,
-                                @RequestParam("description") String description,
-                                @RequestParam("custom_string1_state") Optional<Boolean> customString1State,
-                                @RequestParam("custom_string1_name") Optional<String> customString1Name,
-                                @RequestParam("custom_string2_state") Optional<Boolean> customString2State,
-                                @RequestParam("custom_string2_name") Optional<String> customString2Name,
-                                @RequestParam("custom_string3_state") Optional<Boolean> customString3State,
-                                @RequestParam("custom_string3_name") Optional<String> customString3Name,
-                                @RequestParam("custom_int1_state") Optional<Boolean> customInt1State,
-                                @RequestParam("custom_int1_name") Optional<String> customInt1Name,
-                                @RequestParam("custom_int2_state") Optional<Boolean> customInt2State,
-                                @RequestParam("custom_int2_name") Optional<String> customInt2Name,
-                                @RequestParam("custom_int3_state") Optional<Boolean> customInt3State,
-                                @RequestParam("custom_int3_name") Optional<String> customInt3Name,
+    public String addCollection(@RequestParam("title") String title, @RequestParam("description") String description,
+                                @RequestParam("custom_string1_state") Optional<Boolean> customString1State, @RequestParam("custom_string1_name") Optional<String> customString1Name,
+                                @RequestParam("custom_string2_state") Optional<Boolean> customString2State, @RequestParam("custom_string2_name") Optional<String> customString2Name,
+                                @RequestParam("custom_string3_state") Optional<Boolean> customString3State, @RequestParam("custom_string3_name") Optional<String> customString3Name,
+                                @RequestParam("custom_int1_state") Optional<Boolean> customInt1State, @RequestParam("custom_int1_name") Optional<String> customInt1Name,
+                                @RequestParam("custom_int2_state") Optional<Boolean> customInt2State, @RequestParam("custom_int2_name") Optional<String> customInt2Name,
+                                @RequestParam("custom_int3_state") Optional<Boolean> customInt3State, @RequestParam("custom_int3_name") Optional<String> customInt3Name,
                                 Principal principal)throws NullPointerException{
 
         UserCollection userCollection = new UserCollection();
@@ -145,51 +114,30 @@ public class userController {
         return "redirect:/user"; // Redirect to the user's collection page
     }
 
-/*    @PostMapping("/edit_collection")
-    public String editCollection(
-            @RequestParam("id") Long id,
-            @RequestParam("title") String title,
-            @RequestParam("description") String description){
-
-        Optional<UserCollection> optionalCollection = userCollectionRepository.findById(id);
-
-        if (optionalCollection.isPresent()) {
-            UserCollection editedUserCollection = optionalCollection.get();
-            editedUserCollection.setTitle(title);
-            editedUserCollection.setDescription(description);
-
-            userCollectionRepository.save(editedUserCollection);
-        }
-
-        return "redirect:/user";
-    }*/
 
     @PostMapping("/edit_collection")
     public String editCollection(
-            @RequestParam("id") Long id,
-            @RequestParam("title") String title,
-            @RequestParam("description") String description,
-            @RequestParam("custom_string1_state") Optional<Boolean> customString1State,
-            @RequestParam("custom_string1_name") Optional<String> customString1Name,
-            @RequestParam("custom_string2_state") Optional<Boolean> customString2State,
-            @RequestParam("custom_string2_name") Optional<String> customString2Name,
-            @RequestParam("custom_string3_state") Optional<Boolean> customString3State,
-            @RequestParam("custom_string3_name") Optional<String> customString3Name,
-            @RequestParam("custom_int1_state") Optional<Boolean> customInt1State,
-            @RequestParam("custom_int1_name") Optional<String> customInt1Name,
-            @RequestParam("custom_int2_state") Optional<Boolean> customInt2State,
-            @RequestParam("custom_int2_name") Optional<String> customInt2Name,
-            @RequestParam("custom_int3_state") Optional<Boolean> customInt3State,
-            @RequestParam("custom_int3_name") Optional<String> customInt3Name){
+            @RequestParam("id") Long id, @RequestParam("title") String title, @RequestParam("description") String description,
+            @RequestParam("custom_string1_state") Optional<Boolean> customString1State, @RequestParam("custom_string1_name") Optional<String> customString1Name,
+            @RequestParam("custom_string2_state") Optional<Boolean> customString2State, @RequestParam("custom_string2_name") Optional<String> customString2Name,
+            @RequestParam("custom_string3_state") Optional<Boolean> customString3State, @RequestParam("custom_string3_name") Optional<String> customString3Name,
+            @RequestParam("custom_int1_state") Optional<Boolean> customInt1State, @RequestParam("custom_int1_name") Optional<String> customInt1Name,
+            @RequestParam("custom_int2_state") Optional<Boolean> customInt2State, @RequestParam("custom_int2_name") Optional<String> customInt2Name,
+            @RequestParam("custom_int3_state") Optional<Boolean> customInt3State, @RequestParam("custom_int3_name") Optional<String> customInt3Name){
+
+
+        System.out.println("Editing Collection with ID: " + id);
+        System.out.println("Title: " + title);
+        System.out.println("Description: " + description);
 
         Optional<UserCollection> optionalCollection = userCollectionRepository.findById(id);
 
         if (optionalCollection.isPresent()) {
+
             UserCollection editedUserCollection = optionalCollection.get();
+
             editedUserCollection.setTitle(title);
             editedUserCollection.setDescription(description);
-
-
             // Setting custom fields
             editedUserCollection.setCustom_string1_state(customString1State.orElse(false));
             editedUserCollection.setCustom_string1_name(customString1Name.orElse(null));
@@ -197,7 +145,7 @@ public class userController {
             editedUserCollection.setCustom_string2_name(customString2Name.orElse(null));
             editedUserCollection.setCustom_string3_state(customString3State.orElse(false));
             editedUserCollection.setCustom_string3_name(customString3Name.orElse(null));
-
+            //==========
             editedUserCollection.setCustom_int1_state(customInt1State.orElse(false));
             editedUserCollection.setCustom_int1_name(customInt1Name.orElse(null));
             editedUserCollection.setCustom_int2_state(customInt2State.orElse(false));
@@ -211,9 +159,9 @@ public class userController {
         return "redirect:/user";
     }
 
+
     @GetMapping("/myCollection/item")
-    public String itemList(@RequestParam("id") Long id,
-                           Model model) {
+    public String itemList(@RequestParam("id") Long id, Model model) {
 
         //System.out.println("Received ID: " + id);  // Debugging line
 
@@ -230,6 +178,5 @@ public class userController {
 
         return "user/item_page";
     }
-
 
 }
