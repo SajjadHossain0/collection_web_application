@@ -250,26 +250,34 @@
         <div class="col" style="padding: 10px" th:each="collection : ${userCollection}">
 
             <div id="main-card" class="card" style="width: 100%;">
-                <!--Top Edit & delete buttons-->
+                <!--Top Edit & delete collection-->
                 <div class="d-flex justify-content-end p-2" style="margin: 5px">
-                    <button id="edit-btn" style="margin: 2px" class="btn btn-outline-secondary"
-                            th:data-id="${collection.id}"
-                            th:data-title="${collection.title}"
-                            th:data-description="${collection.description}"
-                            th:data-custom_string1_name="${collection.custom_string1_name}"
-                            th:data-custom_string2_name="${collection.custom_string2_name}"
-                            th:data-custom_string3_name="${collection.custom_string3_name}"
-                            th:data-custom_int1_name="${collection.custom_int1_name}"
-                            th:data-custom_int2_name="${collection.custom_int2_name}"
-                            th:data-custom_int3_name="${collection.custom_int3_name}"
-                    data-bs-toggle="modal" data-bs-target="#editCollectionModal"
-                    th:text="#{lang.editbutton}">Edit
-                    </button>
-                    <button id="deleteBtn" class="btn btn-outline-danger"
-                            th:onclick="'deleteCollection(' + ${collection.id} + ')'"
-                            th:text="#{lang.deletebutton}">Delete
-                    </button>
-
+                    <div class="dropdown">
+                        <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                            </svg>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a id="edit-btn" class="dropdown-item"
+                                        th:data-id="${collection.id}"
+                                        th:data-title="${collection.title}"
+                                        th:data-description="${collection.description}"
+                                        th:data-custom_string1_name="${collection.custom_string1_name}"
+                                        th:data-custom_string2_name="${collection.custom_string2_name}"
+                                        th:data-custom_string3_name="${collection.custom_string3_name}"
+                                        th:data-custom_int1_name="${collection.custom_int1_name}"
+                                        th:data-custom_int2_name="${collection.custom_int2_name}"
+                                        th:data-custom_int3_name="${collection.custom_int3_name}"
+                                        data-bs-toggle="modal" data-bs-target="#editCollectionModal"
+                                        th:text="#{lang.editbutton}">Edit
+                            </a></li>
+                            <li><a id="deleteBtn" class="dropdown-item"
+                                        th:onclick="'deleteCollection(' + ${collection.id} + ')'"
+                                        th:text="#{lang.deletebutton}">Delete
+                            </a></li>
+                        </ul>
+                    </div>
                 </div>
                 <!--=========================-->
 
