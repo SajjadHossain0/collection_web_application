@@ -50,6 +50,13 @@ public class UserCollectionItemController {
             UserCollection collection = collectionOptional.get();
             List<UserCollectionItems> items = userCollectionItemsService.getItemsByCollectionAndUser(collection, user);
 
+            // Debugging: Print items to ensure custom fields are included
+            for (UserCollectionItems item : items) {
+                System.out.println("Item ID: " + item.getId());
+                System.out.println("Custom String Fields: " + item.getCustomStringFields());
+                System.out.println("Custom Int Fields: " + item.getCustomIntFields());
+            }
+
             //System.out.println("Found Collection: " + collection.getTitle());  // Debugging line
             model.addAttribute("collectionItem", collection);
             model.addAttribute("items", items);
@@ -115,15 +122,20 @@ public class UserCollectionItemController {
         return "redirect:/user/myCollection/item?id=" + collectionId;
     }
 
-
     @PostMapping("/myCollection/editItem")
-    @PreAuthorize("hasRole('USER')")
-    public String editItem(@RequestParam("itemId") Long itemId,
-                           @RequestParam("collectionId") Long collectionId,
-                           @RequestParam("name") String name,
-                           @RequestParam("tag") String tag,
-                           @RequestParam Map<String, String> allParams,
-                           RedirectAttributes redirectAttributes) {
+    public String editItem(
+            @RequestParam("itemId") Long itemId,
+            @RequestParam("collectionId") Long collectionId,
+            @RequestParam("name") String name,
+            @RequestParam("tag") String tag,
+            @RequestParam Map<String, String> allParams,
+            RedirectAttributes redirectAttributes) {
+
+        System.out.println("itemId: " + itemId);
+        System.out.println("collectionId: " + collectionId);
+        System.out.println("name: " + name);
+        System.out.println("tag: " + tag);
+        System.out.println("allParams: " + allParams);
 
         Optional<UserCollectionItems> itemOptional = userCollectionItemsRepository.findById(itemId);
 
@@ -132,16 +144,22 @@ public class UserCollectionItemController {
             item.setName(name);
             item.setTag(tag);
 
-            // Extract custom string and int fields
+            // Extract and set custom fields
             Map<String, String> customStringFields = new HashMap<>();
             Map<String, String> customIntFields = new HashMap<>();
+
             for (Map.Entry<String, String> entry : allParams.entrySet()) {
                 if (entry.getKey().startsWith("customStringFields[")) {
                     String key = entry.getKey().substring("customStringFields[".length(), entry.getKey().length() - 1);
                     customStringFields.put(key, entry.getValue());
                 } else if (entry.getKey().startsWith("customIntFields[")) {
                     String key = entry.getKey().substring("customIntFields[".length(), entry.getKey().length() - 1);
-                    customIntFields.put(key, String.valueOf(Integer.parseInt(entry.getValue())));
+                    try {
+                        customIntFields.put(key, String.valueOf(Integer.parseInt(entry.getValue())));
+                    } catch (NumberFormatException e) {
+                        redirectAttributes.addFlashAttribute("error", "Invalid integer value for " + key);
+                        return "redirect:/user/myCollection/item?id=" + collectionId;
+                    }
                 }
             }
 
@@ -149,6 +167,11 @@ public class UserCollectionItemController {
             item.setCustomIntFields(customIntFields);
 
             userCollectionItemsRepository.save(item);
+
+            // Debug print to confirm the saved data
+            System.out.println("Updated Custom String Fields: " + item.getCustomStringFields());
+            System.out.println("Updated Custom Int Fields: " + item.getCustomIntFields());
+
             redirectAttributes.addFlashAttribute("message", "Item updated successfully.");
         } else {
             redirectAttributes.addFlashAttribute("error", "Item not found.");
@@ -158,23 +181,26 @@ public class UserCollectionItemController {
     }
 
 
-
     @PostMapping("/myCollection/deleteItem")
-    @PreAuthorize("hasRole('USER')")
     public String deleteItem(@RequestParam("itemId") Long itemId,
                              @RequestParam("collectionId") Long collectionId,
-                             RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes,
+                             Principal principal) {
+
+        // Retrieve the currently logged-in user
+        User user = userRepository.findByEmail(principal.getName());
+
+        // Retrieve the item by ID and check if it belongs to a collection owned by the current user
         Optional<UserCollectionItems> itemOptional = userCollectionItemsRepository.findById(itemId);
 
-        if (itemOptional.isPresent()) {
+        if (itemOptional.isPresent() && itemOptional.get().getUserCollection().getUser().equals(user)) {
             userCollectionItemsRepository.delete(itemOptional.get());
             redirectAttributes.addFlashAttribute("message", "Item deleted successfully.");
         } else {
-            redirectAttributes.addFlashAttribute("error", "Item not found.");
+            redirectAttributes.addFlashAttribute("error", "Item not found or you do not have permission to delete it.");
         }
 
         return "redirect:/user/myCollection/item?id=" + collectionId;
     }
-
 
 }
