@@ -20,4 +20,9 @@ public class UserCollectionItemsServiceImpl implements UserCollectionItemsServic
     public List<UserCollectionItems> getItemsByCollectionAndUser(UserCollection userCollection, User user) {
         return userCollectionItemsRepository.findByUserCollectionAndUser(userCollection, user);
     }
+
+    @Override
+    public List<UserCollectionItems> getAllItems() {
+        return userCollectionItemsRepository.findAll();
+    }
 }

@@ -9,4 +9,6 @@ import java.util.List;
 public interface UserCollectionItemsService {
 
     List<UserCollectionItems> getItemsByCollectionAndUser(UserCollection userCollection, User user);
+
+    List<UserCollectionItems> getAllItems();
 }

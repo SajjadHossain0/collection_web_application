@@ -17,11 +17,6 @@ public class UserCollectionServiceImpl implements UserCollectionService {
     private UserCollectionRepository userCollectionRepository;
 
     @Override
-    public List<UserCollection> getAllCollections() {
-        return userCollectionRepository.findAll();
-    }
-
-    @Override
     public List<UserCollection> getCollectionsByUser(User user) {
         return userCollectionRepository.findByUser(user);
     }

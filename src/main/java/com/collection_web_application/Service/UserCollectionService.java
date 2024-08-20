@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface UserCollectionService {
 
-    List<UserCollection> getAllCollections();
     List<UserCollection> getCollectionsByUser(User user);
 
     Optional<UserCollection> getCollectionById(Long id);
