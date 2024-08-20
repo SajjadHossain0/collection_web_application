@@ -9,6 +9,75 @@
 <body>
 <section th:insert="~{base :: navbar}"></section>
 
+<!-- Add Item Modal -->
+<div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addItemModalLabel">Add New Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form th:action="@{/user/myCollection/addItem}" method="post">
+                <input type="hidden" name="collectionId" th:value="${collectionItem.id}"/>
+
+                <!-- Item Name -->
+                <div class="mb-3">
+                    <label for="itemName" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="itemName" name="name" required>
+                </div>
+
+                <!-- Item Tags -->
+                <div class="mb-3">
+                    <label for="itemTag" class="form-label">Tags</label>
+                    <input type="text" class="form-control" id="itemTag" name="tag" required>
+                </div>
+
+                <!-- Custom String Fields -->
+                <div th:if="${collectionItem.custom_string1_state}" class="mb-3">
+                    <label th:for="'customString1_' + ${collectionItem.custom_string1_name}" th:text="${collectionItem.custom_string1_name}"></label>
+                    <input type="text" class="form-control" th:id="'customString1_' + ${collectionItem.custom_string1_name}"
+                           th:name="'customStringFields[' + ${collectionItem.custom_string1_name} + ']'">
+                </div>
+                <div th:if="${collectionItem.custom_string2_state}" class="mb-3">
+                    <label th:for="'customString2_' + ${collectionItem.custom_string2_name}" th:text="${collectionItem.custom_string2_name}"></label>
+                    <input type="text" class="form-control" th:id="'customString2_' + ${collectionItem.custom_string2_name}"
+                           th:name="'customStringFields[' + ${collectionItem.custom_string2_name} + ']'">
+                </div>
+                <div th:if="${collectionItem.custom_string3_state}" class="mb-3">
+                    <label th:for="'customString3_' + ${collectionItem.custom_string3_name}" th:text="${collectionItem.custom_string3_name}"></label>
+                    <input type="text" class="form-control" th:id="'customString3_' + ${collectionItem.custom_string3_name}"
+                           th:name="'customStringFields[' + ${collectionItem.custom_string3_name} + ']'">
+                </div>
+
+                <!-- Custom Integer Fields -->
+                <div th:if="${collectionItem.custom_int1_state}" class="mb-3">
+                    <label th:for="'customInt1_' + ${collectionItem.custom_int1_name}" th:text="${collectionItem.custom_int1_name}"></label>
+                    <input type="number" class="form-control" th:id="'customInt1_' + ${collectionItem.custom_int1_name}"
+                           th:name="'customIntFields[' + ${collectionItem.custom_int1_name} + ']'">
+                </div>
+                <div th:if="${collectionItem.custom_int2_state}" class="mb-3">
+                    <label th:for="'customInt2_' + ${collectionItem.custom_int2_name}" th:text="${collectionItem.custom_int2_name}"></label>
+                    <input type="number" class="form-control" th:id="'customInt2_' + ${collectionItem.custom_int2_name}"
+                           th:name="'customIntFields[' + ${collectionItem.custom_int2_name} + ']'">
+                </div>
+                <div th:if="${collectionItem.custom_int3_state}" class="mb-3">
+                    <label th:for="'customInt3_' + ${collectionItem.custom_int3_name}" th:text="${collectionItem.custom_int3_name}"></label>
+                    <input type="number" class="form-control" th:id="'customInt3_' + ${collectionItem.custom_int3_name}"
+                           th:name="'customIntFields[' + ${collectionItem.custom_int3_name} + ']'">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success w-100">Save Item</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Collection name title-->
 <div class="container" style="text-align: center">
     <div class="d-grid gap-2" style="margin-top: 15px">
         <h3><strong th:text="${collectionItem.title}"></strong> Collection</h3>
@@ -16,10 +85,11 @@
 </div>
 
 <div class="container" style="margin-top: 100px;">
-
     <div class="container" style="text-align: center">
         <div class="d-grid gap-2" style="margin-bottom: 50px">
-            <button type="button" class="btn" style="margin: 2px; background-color: #4e4ade; color: white; border: none;">Add item</button>
+            <button type="button" class="btn"
+                    style="margin: 2px; background-color: #4e4ade; color: white; border: none;"
+                    data-bs-toggle="modal" data-bs-target="#addItemModal">Add item</button>
         </div>
     </div>
 
@@ -40,17 +110,18 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
+    <tr th:each="item,status : ${items}">
         <td><input type="checkbox" class="selectRow"></td>
-        <td>1</td>
-        <td>user</td>
-        <td>tags</td>
-        <td th:if="${collectionItem.custom_string1_state}"></td>
-        <td th:if="${collectionItem.custom_string2_state}"></td>
-        <td th:if="${collectionItem.custom_string3_state}"></td>
-        <td th:if="${collectionItem.custom_int1_state}"></td>
-        <td th:if="${collectionItem.custom_int2_state}"></td>
-        <td th:if="${collectionItem.custom_int3_state}"></td>
+        <td th:text="${status.index + 1}"></td>
+        <td th:text="${item.name}"></td>
+        <td th:text="${item.tag}"></td>
+        <td th:if="${collectionItem.custom_string1_state}" th:text="${item.customStringFields[collectionItem.custom_string1_name]}"></td>
+        <td th:if="${collectionItem.custom_string2_state}" th:text="${item.customStringFields[collectionItem.custom_string2_name]}"></td>
+        <td th:if="${collectionItem.custom_string3_state}" th:text="${item.customStringFields[collectionItem.custom_string3_name]}"></td>
+
+        <td th:if="${collectionItem.custom_int1_state}" th:text="${item.customIntFields[collectionItem.custom_int1_name]}"></td>
+        <td th:if="${collectionItem.custom_int2_state}" th:text="${item.customIntFields[collectionItem.custom_int2_name]}"></td>
+        <td th:if="${collectionItem.custom_int3_state}" th:text="${item.customIntFields[collectionItem.custom_int3_name]}"></td>
         <td><a type="button" href="#" id="viewBtn" class="btn btn-info" style="margin-right: 5px;">view</a></td>
     </tr>
     </tbody>

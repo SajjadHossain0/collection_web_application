@@ -17,7 +17,7 @@ public class UserCollectionItems {
 
     @ManyToOne
     @JoinColumn(name = "collection_id", nullable = false)
-    private UserCollection collection;
+    private UserCollection userCollection;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -27,29 +27,29 @@ public class UserCollectionItems {
     private Map<String, String> customStringFields = new HashMap<>();
 
     @ElementCollection
-    private Map<String, Integer> customIntFields = new HashMap<>();
+    private Map<String, String> customIntFields = new HashMap<>();
 
 
 
     public UserCollectionItems() {
     }
 
-    public UserCollectionItems(Long id, String name, String tag, UserCollection collection, User user, Map<String, String> customStringFields, Map<String, Integer> customIntFields) {
+    public UserCollectionItems(Long id, String name, String tag, UserCollection userCollection, User user, Map<String, String> customStringFields, Map<String, String> customIntFields) {
         this.id = id;
         this.name = name;
         this.tag = tag;
-        this.collection = collection;
+        this.userCollection = userCollection;
         this.user = user;
         this.customStringFields = customStringFields;
         this.customIntFields = customIntFields;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -68,12 +68,12 @@ public class UserCollectionItems {
         this.tag = tag;
     }
 
-    public UserCollection getCollection() {
-        return collection;
+    public UserCollection getUserCollection() {
+        return userCollection;
     }
 
-    public void setCollection(UserCollection collection) {
-        this.collection = collection;
+    public void setUserCollection(UserCollection userCollection) {
+        this.userCollection = userCollection;
     }
 
     public User getUser() {
@@ -92,11 +92,11 @@ public class UserCollectionItems {
         this.customStringFields = customStringFields;
     }
 
-    public Map<String, Integer> getCustomIntFields() {
+    public Map<String, String> getCustomIntFields() {
         return customIntFields;
     }
 
-    public void setCustomIntFields(Map<String, Integer> customIntFields) {
+    public void setCustomIntFields(Map<String, String> customIntFields) {
         this.customIntFields = customIntFields;
     }
 }
