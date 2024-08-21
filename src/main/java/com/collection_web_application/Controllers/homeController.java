@@ -30,40 +30,39 @@ public class homeController {
     private UserRepository userRepository;
 
 
-/*    @GetMapping("/")
+    /*@GetMapping("/")
     public String home(Model model) {
 
-        // Retrieve all collections
-        List<UserCollection> collections = userCollectionService.getAllCollections();
+        List<UserCollectionItems> itemsOptional = userCollectionItemsService.getAllItems();
 
-        // Create a map to hold collection and their corresponding items
-        Map<UserCollection, List<UserCollectionItems>> collectionItemsMap = new HashMap<>();
+        if (!itemsOptional.isEmpty()){
 
-        for (UserCollection collection : collections) {
-            // Get all items for each collection
-            List<UserCollectionItems> items = userCollectionItemsService.getItemsByCollection(collection);
+                UserCollectionItems item = itemsOptional.get(0);
+                UserCollection collection = item.getUserCollection();
 
-            // Add the collection and its items to the map
-            collectionItemsMap.put(collection, items);
+                // Add the item to the model
+                model.addAttribute("item_view", item);
+                model.addAttribute("collection_item", collection);
+
+            return "home/home_page";
         }
-
-        // Add the map to the model
-        model.addAttribute("collectionItemsMap", collectionItemsMap);
-
-        return "home/home_page";
+        else {
+            return "redirect:/error"; // Redirect to an error page if the item is not found
+        }
     }*/
 
-    @GetMapping("/")
-    public String home(Model model) {
+        @GetMapping("/")
+        public String home(Model model) {
 
-            return "home/home_page"; // The view to render
+            List<UserCollectionItems> items = userCollectionItemsService.getAllItems();
 
-    }
-
-
-
-
-
+            if (!items.isEmpty()) {
+                model.addAttribute("item_view", items); // Pass the entire list to the view
+                return "home/home_page";
+            } else {
+                return "redirect:/error"; // Redirect to an error page if no items are found
+            }
+        }
 
 
 }
