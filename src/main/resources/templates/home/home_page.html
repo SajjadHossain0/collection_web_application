@@ -13,59 +13,21 @@
 
 <div class="container" style="text-align: center">
     <h1>welcome to Collection web application</h1>
+
+
 </div>
 
-<div class="container">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-        <!-- Iterate over the collections -->
-        <div class="col" style="padding: 10px" th:each="item : ${allItems}">
 
-            <div id="main-card" class="card" style="width: 100%;">
-                <!--Top Edit & delete collection-->
-                <div class="d-flex justify-content-end p-2" style="margin: 5px">
-                    <!--upper content for user name-->
-                    <p th:text="${item.getUser().getName()}"></p>
 
-                </div>
-                <!--=========================-->
 
-                <!--middle side by side info & image option-->
-                <div class="d-flex">
-                    <div id="text-div" class="w-50 p-2">
-                        <div>
-                            <h5>Name</h5>
-                            <p th:text="${item.getName()}"></p>
-                        </div>
-                        <div>
-                            <h5>Tags</h5>
-                            <p th:text="${item.getTag()}"></p>
-                        </div>
-                    </div>
-                </div>
-                <!--============================-->
 
-                <!-- Down date & See Collection button -->
-                <div class="d-flex justify-content-between p-2">
-                    <div>
 
-                    </div>
-                    <div>
-
-                    </div>
-                </div>
-                <!-- ============================ -->
-
-            </div>
-
-        </div>
-        <!-- End of iteration -->
-    </div>
-</div>
 
 
 <script th:src="@{/js/themeJs.js}"></script>
 
+<!--this will make navbar work while in login or register page or any page-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>

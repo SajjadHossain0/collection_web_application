@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +68,34 @@ public class UserCollectionItemController {
         }
 
         return "user/item_page";
+    }
+
+
+    @GetMapping("/myCollection/viewItem")
+    public String viewItem(@RequestParam("id") Long id, Model model, Principal principal) {
+
+        // Retrieve the item based on the ID
+        Optional<UserCollectionItems> itemOptional = userCollectionItemsRepository.findById(id);
+        User user = userRepository.findByEmail(principal.getName()); // Get the current user
+
+        if (itemOptional.isPresent() && user != null) {
+
+            UserCollectionItems item = itemOptional.get();
+            UserCollection collection = item.getUserCollection();
+
+            // Ensure the item belongs to the user
+            if (!collection.getUser().equals(user)) {
+                return "redirect:/error"; // Redirect to an error page if the user does not own the item
+            }
+
+            // Add the item to the model
+            model.addAttribute("item_view", item);
+            model.addAttribute("collection_item", collection);
+
+            return "user/view_item"; // Render the view_item page
+        } else {
+            return "redirect:/error"; // Redirect to an error page if the item is not found
+        }
     }
 
     @PostMapping("/myCollection/addItem")
@@ -202,5 +231,6 @@ public class UserCollectionItemController {
 
         return "redirect:/user/myCollection/item?id=" + collectionId;
     }
+
 
 }

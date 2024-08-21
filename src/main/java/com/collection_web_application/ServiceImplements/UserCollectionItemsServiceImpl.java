@@ -17,6 +17,16 @@ public class UserCollectionItemsServiceImpl implements UserCollectionItemsServic
     UserCollectionItemsRepository userCollectionItemsRepository;
 
     @Override
+    public List<UserCollectionItems> getAllItemsWithCollections() {
+        return userCollectionItemsRepository.findAll();
+    }
+
+    @Override
+    public List<UserCollectionItems> getItemsByCollection(UserCollection collection) {
+        return userCollectionItemsRepository.findAll();
+    }
+
+    @Override
     public List<UserCollectionItems> getItemsByCollectionAndUser(UserCollection userCollection, User user) {
         return userCollectionItemsRepository.findByUserCollectionAndUser(userCollection, user);
     }

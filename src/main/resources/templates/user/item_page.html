@@ -246,7 +246,8 @@
                                th:onclick="'deleteItem(' + ${item.id} + ', ' + ${collectionItem.id} + ')'"
                                th:text="#{lang.deletebutton}">Delete</a>
                         </li>
-                        <li><a id="viewBtn" class="dropdown-item">view</a></li>
+                        <li><a id="viewBtn" class="dropdown-item"
+                               th:href="@{/user/myCollection/viewItem(id=${item.id})}">view</a></li>
                     </ul>
                 </div>
             </td>
