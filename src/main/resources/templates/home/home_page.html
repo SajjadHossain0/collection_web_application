@@ -97,14 +97,17 @@
 
             <div class="card-body d-flex justify-content-around align-items-center" style="padding-top: 10px;">
                 <!--Like-->
-                <div class="d-flex align-items-center justify-content-center text-danger" style="cursor: pointer;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                         class="bi bi-heart-fill" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                              d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
-                    </svg>
-                    <span style="margin-left: 5px">0</span>
-                </div>
+                <form th:action="@{/items/{itemId}/like(itemId=${item.id})}" method="post">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                    <div class="d-flex align-items-center justify-content-center text-danger" style="cursor: pointer;" onclick="this.closest('form').submit();">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                             class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                        </svg>
+                        <span th:text="${item.likes.size()}" style="margin-left: 5px"></span>
+                    </div>
+                </form>
 
                 <!--Comment-->
                 <div>

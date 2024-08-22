@@ -18,5 +18,8 @@ public interface UserCollectionItemsService {
 
     Optional<UserCollectionItems> getItemById(Long id);
 
+    public void toggleLikeItem(Long itemId, User user);
+
+    public int getLikesCount(Long itemId);
 
 }

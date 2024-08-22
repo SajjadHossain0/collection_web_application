@@ -11,10 +11,7 @@ import com.collection_web_application.Service.UserCollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.HashMap;
@@ -46,6 +43,13 @@ public class homeController {
         } else {
             return "redirect:/error"; // Redirect to an error page if no items are found
         }
+    }
+
+    @PostMapping("/items/{itemId}/like")
+    public String likeItem(@PathVariable Long itemId, Principal principal) {
+        User user = userRepository.findByEmail(principal.getName());
+        userCollectionItemsService.toggleLikeItem(itemId, user);
+        return "redirect:/";
     }
 
 

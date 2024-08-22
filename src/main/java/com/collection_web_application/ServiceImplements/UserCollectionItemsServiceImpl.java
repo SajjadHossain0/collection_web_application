@@ -41,4 +41,22 @@ public class UserCollectionItemsServiceImpl implements UserCollectionItemsServic
     public Optional<UserCollectionItems> getItemById(Long id) {
         return userCollectionItemsRepository.findById(id);
     }
+
+    public void toggleLikeItem(Long itemId, User user) {
+        UserCollectionItems item = userCollectionItemsRepository.findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid item ID"));
+
+        if (item.getLikes().contains(user)) {
+            item.getLikes().remove(user); // Unlike the item
+        } else {
+            item.getLikes().add(user); // Like the item
+        }
+
+        userCollectionItemsRepository.save(item);
+    }
+    @Override
+    public int getLikesCount(Long itemId) {
+        return userCollectionItemsRepository.findById(itemId)
+                .map(item -> item.getLikes().size())
+                .orElse(0);    }
 }

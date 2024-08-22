@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Entity
@@ -36,15 +33,21 @@ public class UserCollectionItems {
     @ElementCollection
     private Map<String, String> customIntFields = new HashMap<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "item_likes",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> likes = new HashSet<>();
+
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<CommentItem> comments = new ArrayList<>();
 
-
     public UserCollectionItems() {
-
     }
 
-    public UserCollectionItems(Long id, String name, String tag, UserCollection userCollection, User user, Map<String, String> customStringFields, Map<String, String> customIntFields, List<CommentItem> comments) {
+    public UserCollectionItems(Long id, String name, String tag, UserCollection userCollection, User user, Map<String, String> customStringFields, Map<String, String> customIntFields, Set<User> likes, List<CommentItem> comments) {
         this.id = id;
         this.name = name;
         this.tag = tag;
@@ -52,6 +55,7 @@ public class UserCollectionItems {
         this.user = user;
         this.customStringFields = customStringFields;
         this.customIntFields = customIntFields;
+        this.likes = likes;
         this.comments = comments;
     }
 
