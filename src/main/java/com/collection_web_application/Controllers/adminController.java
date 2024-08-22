@@ -1,6 +1,10 @@
 package com.collection_web_application.Controllers;
 
 import com.collection_web_application.Entities.User;
+import com.collection_web_application.Entities.UserCollection;
+import com.collection_web_application.Entities.UserCollectionItems;
+import com.collection_web_application.Service.UserCollectionItemsService;
+import com.collection_web_application.Service.UserCollectionService;
 import com.collection_web_application.Service.UserDataService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -22,6 +28,11 @@ public class adminController {
     private UserDataService userDataService;
     @Autowired
     private SessionRegistry sessionRegistry;
+    @Autowired
+    private UserCollectionService userCollectionService;
+    @Autowired
+    private UserCollectionItemsService userCollectionItemsService;
+
 
     // Admin page
     @GetMapping("")
@@ -31,6 +42,30 @@ public class adminController {
 
         return "admin/admin_page";
     }
+
+    @GetMapping("/user/{id}")
+    public String viewUser(@PathVariable("id") Long id, Model model) {
+        // Retrieve the user by ID
+        User user = userDataService.getUserByID(id);
+        if (user == null) {
+            // Handle the case where the user is not found (optional)
+            return "redirect:/admin"; // Or display an error message
+        }
+        // Add user data to the model to display on the view page
+        model.addAttribute("user", user);
+
+        List<UserCollection> collectionsByUser = userCollectionService.getCollectionsByUser(user);
+        //List<UserCollectionItems> items = userCollectionItemsService.getItemsByCollectionAndUser((UserCollection) collectionsByUser, user);
+
+        model.addAttribute("userCollection", collectionsByUser);
+
+        //List<UserCollectionItems> items = userCollectionItemsService.getItemsByCollectionAndUser((UserCollection) collectionsByUser, user);
+        //model.addAttribute("items", items);
+
+
+        return "user/user_page";
+    }
+
 
 
     // user action buttons

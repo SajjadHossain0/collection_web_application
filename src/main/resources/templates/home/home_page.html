@@ -133,7 +133,7 @@
     <div class="modal fade" th:id="'commentModal' + ${item.id}" tabindex="-1"
          aria-labelledby="commentModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="commentModalLabel">Comments</h5>
@@ -141,14 +141,14 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
                     <!-- List of Comments -->
-                    <div class="comments-section mb-4">
+                    <div class="comments-section mb-4" style="max-height: 200px; overflow-y: auto;">
                         <ul class="list-group">
-                            <li class="list-group-item" th:each="comment : ${item.comments}">
+                            <li class="list-group-item" style="margin: 5px" th:each="comment : ${item.comments}">
                                 <strong th:text="${comment.user.name}"></strong> : <span
                                     th:text="${comment.comment}"></span>
                             </li>
-                            <!-- Additional comments can be added here -->
                         </ul>
                     </div>
 
@@ -168,8 +168,8 @@
                             </button>
                         </div>
                     </form>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>

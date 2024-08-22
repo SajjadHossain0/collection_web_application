@@ -66,8 +66,6 @@
         <div class="card-body d-flex justify-content-around align-items-center" style="padding-top: 10px;">
 
             <!--Like-->
-            <form th:action="@{/items/{itemId}/like(itemId=${item.id})}" method="post">
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                 <div class="d-flex align-items-center justify-content-center text-danger" style="cursor: pointer;" onclick="this.closest('form').submit();">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                          class="bi bi-heart-fill" viewBox="0 0 16 16">
@@ -76,8 +74,6 @@
                     </svg>
                     <span th:text="${item.likes.size()}" style="margin-left: 5px"></span>
                 </div>
-            </form>
-
 
             <div class="d-flex align-items-center justify-content-center text-primary"
                  data-bs-toggle="modal" th:attr="data-bs-target='#commentModal' + ${item.id}" style="cursor: pointer;"><!-- Comment -->
@@ -95,9 +91,8 @@
 <!-- Comment Modal -->
 <div th:each="item : ${item_view}">
     <div class="modal fade" th:id="'commentModal' + ${item.id}" tabindex="-1"
-         aria-labelledby="commentModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
+         aria-labelledby="commentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="commentModalLabel">Comments</h5>
@@ -105,10 +100,11 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
                     <!-- List of Comments -->
-                    <div class="comments-section mb-4">
+                    <div class="comments-section mb-4" style="max-height: 200px; overflow-y: auto;">
                         <ul class="list-group">
-                            <li class="list-group-item" th:each="comment : ${item.comments}">
+                            <li class="list-group-item" style="margin: 5px" th:each="comment : ${item.comments}">
                                 <strong th:text="${comment.user.name}"></strong> : <span
                                     th:text="${comment.comment}"></span>
                             </li>
@@ -132,8 +128,8 @@
                             </button>
                         </div>
                     </form>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>

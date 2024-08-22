@@ -52,7 +52,6 @@ public class homeController {
         return "redirect:/";
     }
 
-
     @PostMapping("/comments/add")
     public String addComment(@ModelAttribute CommentItem commentItem, @RequestParam("itemId") Long itemId, Principal principal) {
 

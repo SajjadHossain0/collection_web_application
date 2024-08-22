@@ -109,7 +109,7 @@
                 <td th:text="${user.active ? 'Active' : 'Blocked'}"
                     th:style="${user.active} ? 'color: green;' : 'color: red;'"></td>
                 <td th:text="${user.role}" th:style="${user.role == 'ADMIN'} ? 'color: green;' : ''"></td>
-                <td><a type="button" href="#" id="viewBtn" class="btn btn-info" style="margin-right: 5px;">view</a></td>
+                <td><a type="button" th:href="@{/admin/user/{id}(id=${user.id})}" id="viewBtn" class="btn btn-info" style="margin-right: 5px;">view</a></td>
             </tr>
             </tbody>
         </table>
