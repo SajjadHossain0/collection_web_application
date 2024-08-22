@@ -5,6 +5,7 @@ import com.collection_web_application.Entities.UserCollection;
 import com.collection_web_application.Entities.UserCollectionItems;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserCollectionItemsService {
 
@@ -14,4 +15,8 @@ public interface UserCollectionItemsService {
     List<UserCollectionItems> getItemsByCollectionAndUser(UserCollection userCollection, User user);
 
     List<UserCollectionItems> getAllItems();
+
+    Optional<UserCollectionItems> getItemById(Long id);
+
+
 }

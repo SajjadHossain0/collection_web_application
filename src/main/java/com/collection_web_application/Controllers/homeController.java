@@ -1,15 +1,19 @@
 package com.collection_web_application.Controllers;
 
+import com.collection_web_application.Entities.CommentItem;
 import com.collection_web_application.Entities.User;
 import com.collection_web_application.Entities.UserCollection;
 import com.collection_web_application.Entities.UserCollectionItems;
 import com.collection_web_application.Repository.UserRepository;
+import com.collection_web_application.Service.CommentItemService;
 import com.collection_web_application.Service.UserCollectionItemsService;
 import com.collection_web_application.Service.UserCollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
@@ -21,48 +25,42 @@ import java.util.stream.Collectors;
 
 @Controller
 public class homeController {
-
     @Autowired
-    private UserCollectionService userCollectionService;
+    private UserRepository userRepository;
     @Autowired
     private UserCollectionItemsService userCollectionItemsService;
     @Autowired
-    private UserRepository userRepository;
+    private CommentItemService commentItemService;
 
 
-    /*@GetMapping("/")
+    @GetMapping("/")
     public String home(Model model) {
 
-        List<UserCollectionItems> itemsOptional = userCollectionItemsService.getAllItems();
+        List<UserCollectionItems> items = userCollectionItemsService.getAllItems();
 
-        if (!itemsOptional.isEmpty()){
-
-                UserCollectionItems item = itemsOptional.get(0);
-                UserCollection collection = item.getUserCollection();
-
-                // Add the item to the model
-                model.addAttribute("item_view", item);
-                model.addAttribute("collection_item", collection);
+        if (!items.isEmpty()) {
+            model.addAttribute("item_view", items); // Pass the entire list to the view
+            model.addAttribute("newComment", new CommentItem());
 
             return "home/home_page";
+        } else {
+            return "redirect:/error"; // Redirect to an error page if no items are found
         }
-        else {
-            return "redirect:/error"; // Redirect to an error page if the item is not found
-        }
-    }*/
+    }
 
-        @GetMapping("/")
-        public String home(Model model) {
 
-            List<UserCollectionItems> items = userCollectionItemsService.getAllItems();
+    @PostMapping("/comments/add")
+    public String addComment(@ModelAttribute CommentItem commentItem, @RequestParam("itemId") Long itemId, Principal principal) {
 
-            if (!items.isEmpty()) {
-                model.addAttribute("item_view", items); // Pass the entire list to the view
-                return "home/home_page";
-            } else {
-                return "redirect:/error"; // Redirect to an error page if no items are found
-            }
-        }
+        UserCollectionItems item = userCollectionItemsService.getItemById(itemId).orElseThrow(() -> new IllegalArgumentException("Invalid item ID"));
+        User user = userRepository.findByEmail(principal.getName());
+
+        commentItem.setItem(item);
+        commentItem.setUser(user);
+        commentItemService.saveComment(commentItem);
+
+        return "redirect:/"; // Redirect back to the home page
+    }
 
 
 }

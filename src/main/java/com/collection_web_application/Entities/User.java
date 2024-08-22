@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,10 +38,13 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<UserCollection> collections;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<CommentItem> comments = new ArrayList<>(); // New mapping to CommentItem
+
     public User() {
     }
 
-    public User(Long id, String name, String email, String password, String role, boolean active, String lastLoginTime, String registrationTime, Set<UserCollection> collections) {
+    public User(Long id, String name, String email, String password, String role, boolean active, String lastLoginTime, String registrationTime, Set<UserCollection> collections, List<CommentItem> comments) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -48,6 +54,86 @@ public class User {
         this.lastLoginTime = lastLoginTime;
         this.registrationTime = registrationTime;
         this.collections = collections;
+        this.comments = comments;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(String lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getRegistrationTime() {
+        return registrationTime;
+    }
+
+    public void setRegistrationTime(String registrationTime) {
+        this.registrationTime = registrationTime;
+    }
+
+    public Set<UserCollection> getCollections() {
+        return collections;
+    }
+
+    public void setCollections(Set<UserCollection> collections) {
+        this.collections = collections;
+    }
+
+    public List<CommentItem> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentItem> comments) {
+        this.comments = comments;
+    }
 }

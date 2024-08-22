@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserCollectionItemsServiceImpl implements UserCollectionItemsService {
@@ -34,5 +35,10 @@ public class UserCollectionItemsServiceImpl implements UserCollectionItemsServic
     @Override
     public List<UserCollectionItems> getAllItems() {
         return userCollectionItemsRepository.findAll();
+    }
+
+    @Override
+    public Optional<UserCollectionItems> getItemById(Long id) {
+        return userCollectionItemsRepository.findById(id);
     }
 }
