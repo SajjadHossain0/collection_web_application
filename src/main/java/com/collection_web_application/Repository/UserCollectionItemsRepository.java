@@ -13,7 +13,4 @@ import java.util.List;
 public interface UserCollectionItemsRepository extends JpaRepository<UserCollectionItems, Long> {
 
     List<UserCollectionItems> findByUserCollectionAndUser(UserCollection userCollection, User user);
-
-
-
 }

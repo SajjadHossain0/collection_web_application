@@ -1,17 +1,14 @@
 package com.collection_web_application.Configurations;
 
-import jakarta.servlet.Filter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-
 import java.util.Locale;
 
 @Configuration
@@ -30,6 +27,7 @@ public class languageConfig implements WebMvcConfigurer {
         lci.setParamName("lang");
         return lci;
     }
+
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
@@ -37,8 +35,6 @@ public class languageConfig implements WebMvcConfigurer {
         messageSource.setDefaultEncoding("UTF-8"); // Ensure UTF-8 encoding
         return messageSource;
     }
-
-
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -49,14 +45,8 @@ public class languageConfig implements WebMvcConfigurer {
 
 /*
 messages.properties (English)
-
 navbar.home=Home
-navbar.about=About
-navbar.contact=Contact
-
+..
 messages_bn.properties (Bengali)
-
 navbar.home=বাড়ি
-navbar.about=সম্পর্কে
-navbar.contact=যোগাযোগ
 */

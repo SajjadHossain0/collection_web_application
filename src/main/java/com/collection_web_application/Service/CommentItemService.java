@@ -8,7 +8,5 @@ import java.util.List;
 public interface CommentItemService {
 
     List<CommentItem> getCommentsByItem(UserCollectionItems item);
-
     public void saveComment(CommentItem commentItem);
-
 }

@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,15 +25,6 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
-
-        /*if (roles.contains("ROLE_USER")){
-            response.sendRedirect("/user_page");
-        }
-        else {
-            response.sendRedirect("/");
-        }*/
-
-
         // this is for admin access
         if (roles.contains("ROLE_ADMIN")) {
             response.sendRedirect("/admin");
@@ -45,15 +35,15 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
         }
 
-        String email = authentication.getName(); // Get the authenticated user's email
 
         // Update the last login time
+        String email = authentication.getName(); // Get the authenticated user's email
         User user = userRepository.findByEmail(email);
         if (user != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a dd MMM yyyy");
             String formattedDateTime = LocalDateTime.now().format(formatter);
             user.setLastLoginTime(formattedDateTime);
-            userRepository.save(user); // Save the updated user
+            userRepository.save(user);
         }
     }
 }

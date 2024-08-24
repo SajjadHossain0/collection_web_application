@@ -29,7 +29,6 @@ public class homeController {
     @Autowired
     private CommentItemService commentItemService;
 
-
     @GetMapping("/")
     public String home(Model model) {
 

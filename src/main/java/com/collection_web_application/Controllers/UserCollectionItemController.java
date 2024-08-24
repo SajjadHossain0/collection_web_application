@@ -9,7 +9,6 @@ import com.collection_web_application.Repository.UserRepository;
 import com.collection_web_application.Service.UserCollectionItemsService;
 import com.collection_web_application.Service.UserCollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -70,7 +68,6 @@ public class UserCollectionItemController {
         return "user/item_page";
     }
 
-
     @GetMapping("/myCollection/viewItem")
     public String viewItem(@RequestParam("id") Long id, Model model, Principal principal) {
 
@@ -99,12 +96,9 @@ public class UserCollectionItemController {
     }
 
     @PostMapping("/myCollection/addItem")
-    public String addItem(@RequestParam("collectionId") Long collectionId,
-                          @RequestParam("name") String name,
-                          @RequestParam("tag") String tag,
-                          @RequestParam Map<String, String> allParams, // All form parameters
-                          Principal principal,
-                          RedirectAttributes redirectAttributes) {
+    public String addItem(@RequestParam("collectionId") Long collectionId, @RequestParam("name") String name,
+                          @RequestParam("tag") String tag, @RequestParam Map<String, String> allParams, // All form parameters
+                          Principal principal, RedirectAttributes redirectAttributes) {
 
         // Extract custom string and int fields manually
         Map<String, String> customStringFields = new HashMap<>();
@@ -152,13 +146,9 @@ public class UserCollectionItemController {
     }
 
     @PostMapping("/myCollection/editItem")
-    public String editItem(
-            @RequestParam("itemId") Long itemId,
-            @RequestParam("collectionId") Long collectionId,
-            @RequestParam("name") String name,
-            @RequestParam("tag") String tag,
-            @RequestParam Map<String, String> allParams,
-            RedirectAttributes redirectAttributes) {
+    public String editItem(@RequestParam("itemId") Long itemId, @RequestParam("collectionId") Long collectionId,
+            @RequestParam("name") String name, @RequestParam("tag") String tag,
+            @RequestParam Map<String, String> allParams, RedirectAttributes redirectAttributes) {
 
         System.out.println("itemId: " + itemId);
         System.out.println("collectionId: " + collectionId);
@@ -211,10 +201,8 @@ public class UserCollectionItemController {
 
 
     @PostMapping("/myCollection/deleteItem")
-    public String deleteItem(@RequestParam("itemId") Long itemId,
-                             @RequestParam("collectionId") Long collectionId,
-                             RedirectAttributes redirectAttributes,
-                             Principal principal) {
+    public String deleteItem(@RequestParam("itemId") Long itemId, @RequestParam("collectionId") Long collectionId,
+                             RedirectAttributes redirectAttributes, Principal principal) {
 
         // Retrieve the currently logged-in user
         User user = userRepository.findByEmail(principal.getName());

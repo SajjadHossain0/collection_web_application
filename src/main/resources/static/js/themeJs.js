@@ -38,6 +38,7 @@ function applyTheme(theme) {
         card.className = 'card'; // Reset card classes
         card.classList.add(theme); // Apply current theme to card
     });
+
     //modal-content
     const modal_contents = document.querySelectorAll('#modal-content');
     modal_contents.forEach(modal_content => {
@@ -51,5 +52,6 @@ function applyTheme(theme) {
         user_table.className = 'table';
         user_table.classList.add(theme);
     });
+
 }
 
