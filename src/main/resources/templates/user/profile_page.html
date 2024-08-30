@@ -65,11 +65,8 @@
             </div>
 
             <div class="col-md-6">
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <div class="profile-label">API Token  <button id="generateTokenButton" class="btn btn-link">Generate API Token</button></div>
+                <div class="profile-label">API Token <button id="generateTokenButton" class="btn btn-outline-secondary">Generate API Token</button></div>
                 <div class="profile-value" id="apiTokenDisplay" th:text="${user.apiToken}">No API Token</div>
-                <div class="profile-value"></div>
-
             </div>
 
         </div>
