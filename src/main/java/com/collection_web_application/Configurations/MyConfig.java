@@ -31,7 +31,7 @@ public class MyConfig {
         return httpSecurity
                 // Configure authorization rules for different URLs.
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**", "/register", "/login").permitAll() // Allow access to these endpoints without authentication.
+                        .requestMatchers("/", "/register", "/login").permitAll() // Allow access to these endpoints without authentication.
                         .requestMatchers("/user/**").hasRole("USER") // Restrict access to user-specific pages to users with the "USER" role.
                         .requestMatchers("/admin/**").hasRole("ADMIN") // Restrict access to admin-specific pages to users with the "ADMIN" role.
                         .anyRequest().authenticated())// Require authentication for all other requests.
