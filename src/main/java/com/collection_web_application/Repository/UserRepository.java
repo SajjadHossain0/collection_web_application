@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public User findByEmail(String email);
 
+    public User findByApiToken(String apiToken);
+
     @Query("SELECT u FROM User u WHERE u.email = :query OR u.role LIKE %:query%")
     List<User> findByEmailOrRoleContaining(@Param("query") String query);
 

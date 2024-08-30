@@ -41,10 +41,12 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<CommentItem> comments = new ArrayList<>(); // New mapping to CommentItem
 
+    @Column(unique = true)
+    private String apiToken;
     public User() {
     }
 
-    public User(Long id, String name, String email, String password, String role, boolean active, String lastLoginTime, String registrationTime, Set<UserCollection> collections, List<CommentItem> comments) {
+    public User(Long id, String name, String email, String password, String role, boolean active, String lastLoginTime, String registrationTime, Set<UserCollection> collections, List<CommentItem> comments, String apiToken) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -55,6 +57,7 @@ public class User {
         this.registrationTime = registrationTime;
         this.collections = collections;
         this.comments = comments;
+        this.apiToken = apiToken;
     }
 
     public Long getId() {
@@ -136,4 +139,16 @@ public class User {
     public void setComments(List<CommentItem> comments) {
         this.comments = comments;
     }
+
+
+    public String getApiToken() {
+        return apiToken;
+    }
+
+    public void setApiToken(String apiToken) {
+        this.apiToken = apiToken;
+    }
+
+
+
 }

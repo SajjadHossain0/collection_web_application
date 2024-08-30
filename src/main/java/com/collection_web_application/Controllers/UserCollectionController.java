@@ -4,14 +4,20 @@ import com.collection_web_application.Entities.User;
 import com.collection_web_application.Entities.UserCollection;
 import com.collection_web_application.Repository.UserCollectionRepository;
 import com.collection_web_application.Repository.UserRepository;
+import com.collection_web_application.Service.UserCollectionService;
+import com.collection_web_application.Service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -22,6 +28,10 @@ public class UserCollectionController {
     private UserCollectionRepository userCollectionRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserCollectionService userCollectionService;
+    @Autowired
+    private UserDataService userDataService;
 
 
     @PostMapping("/add_collection")
@@ -70,8 +80,7 @@ public class UserCollectionController {
 
     @PostMapping("/collection/delete")
     public String deleteCollection(
-            @RequestParam("collectionId") Long collectionId,
-            Principal principal) {
+            @RequestParam("collectionId") Long collectionId, Principal principal) {
 
         // Get the currently logged-in user
         User user = userRepository.findByEmail(principal.getName());
@@ -131,5 +140,17 @@ public class UserCollectionController {
         return "redirect:/user";
     }
 
+
+    @GetMapping("/collections")
+    public ResponseEntity<List<UserCollection>> getUserCollections(
+            @RequestParam String apiToken) {
+        User user = userDataService.findUserByToken(apiToken);
+        if (user != null) {
+            List<UserCollection> collections = userCollectionService.getCollectionsByUser(user);
+            return ResponseEntity.ok(collections);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
 
 }

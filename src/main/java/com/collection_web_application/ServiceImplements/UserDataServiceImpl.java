@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserDataServiceImpl implements UserDataService {
@@ -57,6 +58,20 @@ public class UserDataServiceImpl implements UserDataService {
     @Override
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    public User findUserByToken(String apiToken) {
+        // Find user by API token
+        return userRepository.findByApiToken(apiToken);
+    }
+
+    public String generateApiToken(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        // Generate a token (e.g., UUID)
+        String token = UUID.randomUUID().toString();
+        user.setApiToken(token); // Save the token to the user record
+        userRepository.save(user);
+        return token;
     }
 
 }

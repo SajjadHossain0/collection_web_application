@@ -122,4 +122,12 @@ public class UserCollectionItems {
     public void setComments(List<CommentItem> comments) {
         this.comments = comments;
     }
+
+    public Set<User> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<User> likes) {
+        this.likes = likes;
+    }
 }

@@ -53,15 +53,23 @@
 
                 <!--logout section-->
                 <ul class="navbar-nav me-3" sec:authorize="isAuthenticated()">
-                    <li class="nav-item">
-                        <a class="nav-link"><span th:text="${#authentication.name}"></span></a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span th:text="${#authentication.getName()}"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="/user/profile">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="post" action="/logout" class="d-inline">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button th:text="#{lang.logout}" type="submit" class="dropdown-item btn btn-danger btn-sm"
+                                            style="margin: 5px;">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
-
-                <form method="post" action="/logout" sec:authorize="isAuthenticated()" class="d-inline">
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                    <button th:text="#{lang.logout}" type="submit" class="btn btn-danger btn-sm mx-1" style="margin: 5px;">Logout</button>
-                </form>
                 <!--logout section close-->
                 <div>
                     <a id="theme-toggle" class="btn" style="margin: 5px;">

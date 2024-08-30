@@ -15,4 +15,8 @@ public interface UserDataService {
 
     void deleteUser(Long userId);
 
+    User findUserByToken(String apiToken);
+
+    String generateApiToken(Long userId);
+
 }
