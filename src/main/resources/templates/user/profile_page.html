@@ -11,16 +11,19 @@
             border-bottom: 1px solid #dee2e6;
             margin-bottom: 20px;
         }
+
         .profile-details {
             padding: 15px;
             background-color: #ffffff;
             border: 1px solid #dee2e6;
             border-radius: 5px;
         }
+
         .profile-label {
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .profile-value {
             margin-bottom: 15px;
         }
@@ -65,8 +68,20 @@
             </div>
 
             <div class="col-md-6">
-                <div class="profile-label">API Token <button id="generateTokenButton" class="btn btn-outline-secondary">Generate API Token</button></div>
-                <div class="profile-value" id="apiTokenDisplay" th:text="${user.apiToken}">No API Token</div>
+                <div class="profile-label">API Token</div>
+                <div class="profile-value"><span id="apiToken" th:text="${user.apiToken}">No API Token</span></div>
+
+                <div class="profile-value d-flex align-items-center" id="apiTokenDisplay">
+                    <button id="generateTokenButton" class="btn btn-outline-secondary">Generate API Token</button>
+                    <button id="copyTokenButton" class="btn btn-outline-secondary ms-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-clipboard" viewBox="0 0 16 16">
+                            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                            <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+                        </svg>
+                        copy to clipboard
+                    </button>
+                </div>
             </div>
 
         </div>
@@ -74,37 +89,19 @@
 
     <div class="text-center mt-4">
         <a href="/user/export/collections" class="btn btn-primary">Export Collections Data</a>
-        <a href="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#viewReportModal">View Report</a>
-
-        <!--Modal for view Power-Bi report-->
-        <div class="modal fade" id="viewReportModal" tabindex="-1" aria-labelledby="viewReportModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="viewReportModalLabel">Your Collection Report</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <iframe width="100%" height="800px"></iframe>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="text-center mt-4">
         <a href="/" class="btn btn-danger">Back to Home</a>
     </div>
 
+
 </div>
-
-
 <script>
-    document.getElementById("generateTokenButton").addEventListener("click", function() {
+    document.getElementById('copyTokenButton').addEventListener('click', function () {
+        const apiTokenText = document.getElementById('apiToken').textContent;
+        navigator.clipboard.writeText(apiTokenText);
+    });
+</script>
+<script>
+    document.getElementById("generateTokenButton").addEventListener("click", function () {
         const userId = [[${user.id}]];
         const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
 
@@ -122,7 +119,7 @@
                 return response.text();
             })
             .then(token => {
-                document.getElementById("apiTokenDisplay").innerText =token;
+                document.getElementById("apiTokenDisplay").innerText = token;
             })
             .catch(error => console.error('Error:', error));
     });
