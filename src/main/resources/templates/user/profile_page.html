@@ -68,10 +68,12 @@
             </div>
 
             <div class="col-md-6">
-                <div class="profile-label">API Token</div>
-                <div class="profile-value"><span id="apiToken" th:text="${user.apiToken}">No API Token</span></div>
+                <div class="profile-label">API Token<span id="copySuccess" class="ms-2 text-success" style="display:none;">Copied!</span></div>
+                <div class="profile-value" id="apiTokenDisplay">
+                    <span id="apiToken" th:text="${user.apiToken}">No API Token</span>
+                </div>
 
-                <div class="profile-value d-flex align-items-center" id="apiTokenDisplay">
+                <div class="profile-value d-flex align-items-center" >
                     <button id="generateTokenButton" class="btn btn-outline-secondary">Generate API Token</button>
                     <button id="copyTokenButton" class="btn btn-outline-secondary ms-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -94,11 +96,20 @@
 
 
 </div>
+
 <script>
-    document.getElementById('copyTokenButton').addEventListener('click', function () {
-        const apiTokenText = document.getElementById('apiToken').textContent;
-        navigator.clipboard.writeText(apiTokenText);
+    document.getElementById("copyTokenButton").addEventListener("click", function() {
+    const tokenText = document.getElementById("apiToken").innerText;
+    navigator.clipboard.writeText(tokenText).then(function() {
+        const successSpan = document.getElementById("copySuccess");
+        successSpan.style.display = "inline";
+
+        setTimeout(() => {
+            successSpan.style.display = "none";
+        }, 2000);  // Hide the message after 2 seconds
     });
+});
+
 </script>
 <script>
     document.getElementById("generateTokenButton").addEventListener("click", function () {

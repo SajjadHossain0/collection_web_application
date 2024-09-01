@@ -13,4 +13,6 @@ public interface UserCollectionService {
     List<UserCollection> getCollectionsByUser(User user);
 
     Optional<UserCollection> getCollectionById(Long id);
+
+    public String importCollections(String apiToken);
 }

@@ -31,9 +31,8 @@ public class UserCollection {
     private String description;
     private String collection_creation_date;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Transient
+    private int numberOfItems;
 
     @OneToMany(mappedBy = "userCollection", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserCollectionItems> items;  // Make sure this is a collection type
@@ -53,6 +52,11 @@ public class UserCollection {
     private String custom_string3_name;
     private Boolean custom_int3_state;
     private String custom_int3_name;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
 
 
     public UserCollection() {
@@ -78,6 +82,16 @@ public class UserCollection {
         this.custom_int3_state = custom_int3_state;
         this.custom_int3_name = custom_int3_name;
     }
+
+    @PostLoad
+    public void calculateNumberOfItems() {
+        if (items != null) {
+            this.numberOfItems = items.size();
+        } else {
+            this.numberOfItems = 0;
+        }
+    }
+
 
     public Long getId() {
         return id;
@@ -111,12 +125,28 @@ public class UserCollection {
         this.collection_creation_date = collection_creation_date;
     }
 
+    public int getNumberOfItems() {
+        return numberOfItems;
+    }
+
+    public void setNumberOfItems(int numberOfItems) {
+        this.numberOfItems = numberOfItems;
+    }
+
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<UserCollectionItems> getItems() {
+        return items;
+    }
+
+    public void setItems(List<UserCollectionItems> items) {
+        this.items = items;
     }
 
     public Boolean getCustom_string1_state() {
@@ -213,13 +243,5 @@ public class UserCollection {
 
     public void setCustom_int3_name(String custom_int3_name) {
         this.custom_int3_name = custom_int3_name;
-    }
-
-    public List<UserCollectionItems> getItems() {
-        return items;
-    }
-
-    public void setItems(List<UserCollectionItems> items) {
-        this.items = items;
     }
 }

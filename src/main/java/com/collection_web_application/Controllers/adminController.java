@@ -41,6 +41,7 @@ public class adminController {
     @Autowired
     private UserCollectionItemsRepository userCollectionItemsRepository;
 
+
     // Handles the request for the main admin page.
     @GetMapping("")
     public String admin(Model model) {
@@ -61,7 +62,7 @@ public class adminController {
         return "admin/viewUserCollection"; // Return the user page view.
     }
 
-    /*@GetMapping("/myCollection/item")
+/*    @GetMapping("/myCollection/item")
     public String itemList(@RequestParam("id") Long id, Model model, Principal principal) {
 
         //System.out.println("Received ID: " + id);  // Debugging line
@@ -90,8 +91,8 @@ public class adminController {
         }
 
         return "admin/viewUserCollectionItems";
-    }
-*/
+    }*/
+
 
     @GetMapping("/myCollection/item")
     public String itemList(@RequestParam("id") Long id, Model model, Principal principal) {
