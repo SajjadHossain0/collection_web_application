@@ -1,6 +1,7 @@
 package com.collection_web_application.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,13 +30,22 @@ public class UserCollection {
     @Size(max = 150)
     @Column(length = 150)
     private String description;
+
     private String collection_creation_date;
+
 
     @Transient
     private int numberOfItems;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @OneToMany(mappedBy = "userCollection", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<UserCollectionItems> items;  // Make sure this is a collection type
+
+
 
 
     private Boolean custom_string1_state;
@@ -52,10 +62,6 @@ public class UserCollection {
     private String custom_string3_name;
     private Boolean custom_int3_state;
     private String custom_int3_name;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 
 
 

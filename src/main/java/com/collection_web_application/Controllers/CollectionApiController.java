@@ -47,7 +47,7 @@ public class CollectionApiController {
 //
        List<UserCollection> userCollections = collections.stream()
                .map(collection -> {
-                   UserCollection dto = new UserCollection();
+                   UserCollection dto;
                    dto = new UserCollection();
                    dto.setId(collection.getId());
                    dto.setTitle(collection.getTitle());
