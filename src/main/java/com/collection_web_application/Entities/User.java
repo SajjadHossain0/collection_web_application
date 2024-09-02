@@ -41,6 +41,7 @@ public class User {
     private Set<UserCollection> collections;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
     private List<CommentItem> comments = new ArrayList<>(); // New mapping to CommentItem
 
     @Column(unique = true)
