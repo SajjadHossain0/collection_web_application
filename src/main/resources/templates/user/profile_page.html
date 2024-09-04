@@ -33,11 +33,13 @@
 <section th:insert="~{base :: navbar}"></section>
 
 <div class="container mt-5">
+
     <div class="profile-header text-center">
         <h2>User Profile</h2>
         <p class="text-muted">Manage your account details</p>
     </div>
 
+    <!--Profile details-->
     <div class="profile-details">
         <div class="row">
             <div class="col-md-6">
@@ -68,12 +70,13 @@
             </div>
 
             <div class="col-md-6">
-                <div class="profile-label">API Token<span id="copySuccess" class="ms-2 text-success" style="display:none;">Copied!</span></div>
+                <div class="profile-label">API Token<span id="copySuccess" class="ms-2 text-success"
+                                                          style="display:none;">Copied!</span></div>
                 <div class="profile-value" id="apiTokenDisplay">
                     <span id="apiToken" th:text="${user.apiToken}">No API Token</span>
                 </div>
 
-                <div class="profile-value d-flex align-items-center" >
+                <div class="profile-value d-flex align-items-center">
                     <button id="generateTokenButton" class="btn btn-outline-secondary">Generate API Token</button>
                     <button id="copyTokenButton" class="btn btn-outline-secondary ms-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -89,7 +92,56 @@
         </div>
     </div>
 
-    <div class="text-center mt-4">
+
+    <!--salesforce details-->
+    <div class="profile-details" style="margin-top: 20px">
+        <div class="profile-header text-center">
+            <h2><img src="/images/salesforce.png" alt="Salesforce Logo" width="100" height="70"/></h2>
+
+            <!-- Button to open the Salesforce Account creation modal -->
+            <button class="btn" href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#salesforceModal"
+                    style="background-color: #00a6ff; color: white">Create Salesforce account</button>
+
+            <!-- Modal for Salesforce Account creation -->
+            <div class="modal fade" id="salesforceModal" tabindex="-1" aria-labelledby="salesforceModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="get" action="/oauth/salesforce">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="salesforceModalLabel">
+                                    <img src="/images/salesforce.png" alt="Salesforce Logo" width="35" height="20"/>
+                                    Create Salesforce account
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="edit-item-name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="edit-item-name" name="name"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edit-item-email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="edit-item-email" name="email"/>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn" style="background-color: #00a6ff; color: white">
+                                    Create account
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--export and back button-->
+    <div class="text-center mt-4" style="margin-bottom: 25px">
         <a href="/user/export/collections" class="btn btn-primary">Export Collections Data</a>
         <a href="/" class="btn btn-danger">Back to Home</a>
     </div>
@@ -98,17 +150,17 @@
 </div>
 
 <script>
-    document.getElementById("copyTokenButton").addEventListener("click", function() {
-    const tokenText = document.getElementById("apiToken").innerText;
-    navigator.clipboard.writeText(tokenText).then(function() {
-        const successSpan = document.getElementById("copySuccess");
-        successSpan.style.display = "inline";
+    document.getElementById("copyTokenButton").addEventListener("click", function () {
+        const tokenText = document.getElementById("apiToken").innerText;
+        navigator.clipboard.writeText(tokenText).then(function () {
+            const successSpan = document.getElementById("copySuccess");
+            successSpan.style.display = "inline";
 
-        setTimeout(() => {
-            successSpan.style.display = "none";
-        }, 2000);  // Hide the message after 2 seconds
+            setTimeout(() => {
+                successSpan.style.display = "none";
+            }, 2000);  // Hide the message after 2 seconds
+        });
     });
-});
 
 </script>
 <script>

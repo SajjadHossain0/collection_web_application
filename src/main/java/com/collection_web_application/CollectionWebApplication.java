@@ -22,6 +22,10 @@ public class CollectionWebApplication {
 
          */
 
+        /*Salesforce integration*/
+        /*https://page-page-7820.lightning.force.com/lightning/page/home*/
+        /*https://spring.io/guides/tutorials/spring-boot-oauth2*/
+        /*https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_rest.htm*/
 
     }
 
